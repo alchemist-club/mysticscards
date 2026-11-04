@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Working files: index.html, styles.css and app.js. See README.md. -->
+  <meta charset="UTF-8" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-title" content="Cards" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mystic Cards</title>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="theme-color" content="#131313" />
+  <meta name="version" content="2026-11-01b" />
+  <meta name="description" content="Explore cardology with Cards: find your birthday cards, Life Script, and cycles." />
+  <!-- OpenGraph / Twitter link previews. og-image is 1200×630. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Cards" />
+  <meta property="og:description" content="Explore cardology with Cards: find your birthday cards, Life Script, and cycles." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Cards" />
+  <meta name="twitter:description" content="Explore cardology with Cards: find your birthday cards, Life Script, and cycles." />
+  <link rel="stylesheet" href="styles.css?v=79">
+
+</head>
+<body class="starry">
+<canvas class="stars-bg" aria-hidden="true"></canvas>
+<script src="app.js?v=74"></script>
+<main id="main" tabindex="-1">
+  <h1 class="site-title"><button type="button" id="siteToday" class="site-title-emblem" aria-label="Load today’s card"><svg viewBox="0 0 100 100" class="site-title-suits"><svg x="17" y="17" width="29" height="29" viewBox="15 14 70 72" class="suit-red"><path d="M50,86 C45,79 15,58 15,34 C15,22 24,14 35,14 C43,14 48,20 50,27 C52,20 57,14 65,14 C76,14 85,22 85,34 C85,58 55,79 50,86 Z"/></svg><svg x="54" y="17" width="29" height="29" viewBox="7 10 86 86"><circle cx="50" cy="30" r="20"/><circle cx="27" cy="58" r="20"/><circle cx="73" cy="58" r="20"/><path d="M44,46 L40,96 L60,96 L56,46 Z"/></svg><svg x="17" y="54" width="29" height="29" viewBox="6 8 88 87"><path d="M50,8 C30,26 6,50 6,66 C6,82 22,90 36,82 C42,78 47,74 50,70 L40,95 L60,95 L50,70 C53,74 58,78 64,82 C78,90 94,82 94,66 C94,50 70,26 50,8 Z"/></svg><svg x="54" y="54" width="29" height="29" viewBox="14 6 72 88" class="suit-red"><path d="M50,6 L86,50 L50,94 L14,50 Z"/></svg></svg></button><button type="button" id="siteTitleRefresh" class="site-title-refresh" aria-label="Mystic Cards — refresh page"><span class="site-title-wordmark"><span class="site-title-mystic">Mystic</span><span class="site-title-cards">Cards</span></span></button> <button type="button" class="site-title-base" data-solar-number="52" data-solar-format-toggle role="switch" aria-label="Decimal solar values" aria-checked="false" title="Switch between base 12 and base 10">44</button></h1>
+  <!-- NC MARKUP: FINDER -->
+  <section class="finder page-section section-open" id="finder" aria-labelledby="finderHeading">
+    <h2 class="vh" id="finderHeading">Finder</h2>
+    <div class="section-bodywrap">
+        <div class="section-bodymin" id="finderBody">
+          <div class="section-shell">
+          <!-- Finder tools and date controls. -->
+          <div class="finder-tools">
+            <button type="button" id="fRelToggle" class="finder-tool-btn finder-rel-toggle" title="Add relationship" aria-label="Add relationship" aria-pressed="false">Relationship</button>
+            <button type="button" id="finderBdayBtn" class="finder-tool-btn" title="Contacts" aria-label="Contacts" aria-expanded="false" aria-controls="bdayTrayWrap">Contacts</button>
+            <button type="button" class="finder-tool-btn" id="qOpen" aria-label="Quadrations" title="Quadrations" aria-controls="qInlinePanel" aria-expanded="false">Quadrations</button>
+            <button type="button" id="ncOrderToggle" class="finder-tool-btn finder-share-btn" aria-label="Tools" title="Tools" aria-expanded="false" aria-controls="ncOrderControls">Tools</button>
+            <span id="finderShareStatus" class="vh" role="status"></span>
+          </div>
+
+          <div class="nc-date-controls">
+<div class="finder-persons">
+            <fieldset class="finder-person" data-role="you">
+              <legend class="vh">You</legend>
+              <div class="finder-inputs">
+                <div class="finder-datepair">
+                  <label class="finder-select-wrap">
+                    <input id="fDay" class="finder-select finder-day-input" type="text"
+                           maxlength="2" inputmode="numeric" pattern="[0-9]*"
+                           placeholder="DD" aria-label="Your birth day">
+                  </label>
+                  <span class="finder-datepair-slash" aria-hidden="true">/</span>
+                  <label class="finder-select-wrap">
+                    <input id="fMonth" class="finder-select finder-day-input" type="text"
+                           maxlength="2" inputmode="numeric" pattern="[0-9]*"
+                           placeholder="MM" aria-label="Your birth month">
+                  </label>
+                </div>
+              
+                </div>
+            <p class="nc-contact-context" id="ncContact-you" aria-live="polite" hidden></p></fieldset>
+            <fieldset class="finder-person" data-role="partner">
+              <legend class="vh">Partner</legend>
+              <div class="finder-inputs">
+                <div class="finder-datepair">
+                  <label class="finder-select-wrap">
+                    <input id="fpDay" class="finder-select finder-day-input" type="text"
+                           maxlength="2" inputmode="numeric" pattern="[0-9]*"
+                           placeholder="DD" aria-label="Partner's birth day">
+                  </label>
+                  <span class="finder-datepair-slash" aria-hidden="true">/</span>
+                  <label class="finder-select-wrap">
+                    <input id="fpMonth" class="finder-select finder-day-input" type="text"
+                           maxlength="2" inputmode="numeric" pattern="[0-9]*"
+                           placeholder="MM" aria-label="Partner's birth month">
+                  </label>
+                </div>
+              </div>
+            <p class="nc-contact-context" id="ncContact-partner" aria-live="polite" hidden></p></fieldset>
+          </div>
+</div>
+
+          <section class="nc-order-controls" id="ncOrderControls" aria-label="Tools" hidden>
+            <h3 class="nc-order-heading">Tools</h3>
+            <section id="toolsCalendarPanel" class="tools-calendar" role="tabpanel" aria-labelledby="settingsCalendarTab">
+              <div class="tools-calendar-header">
+                <div><span class="tools-calendar-label">Explore dates</span><div class="tools-calendar-nav tools-calendar-date-nav"><button type="button" id="calendarPrevious" aria-label="Previous month">‹</button><div class="finder-datepair tools-calendar-datepair"><label class="finder-select-wrap"><span class="vh">Calendar month</span><input id="toolsCalendarMonth" class="finder-select finder-day-input" type="text" inputmode="numeric" maxlength="2" placeholder="MM" aria-label="Calendar month"></label><span class="finder-datepair-slash" aria-hidden="true">/</span><label class="finder-select-wrap tools-calendar-year-wrap"><span class="vh">Calendar year</span><input id="toolsCalendarYear" class="finder-select finder-day-input" type="text" inputmode="numeric" maxlength="4" placeholder="YYYY" aria-label="Calendar year"></label></div><button type="button" id="calendarNext" aria-label="Next month">›</button></div><span id="toolsCalendarAnnouncement" class="vh" aria-live="polite"></span></div>
+                <div class="tools-calendar-nav tools-calendar-actions"><button type="button" id="calendarPairToggle" class="tools-calendar-pair-toggle" aria-label="Pair opposite months" title="Pair opposite months" aria-pressed="false" aria-controls="toolsCalendarYearView" hidden><svg class="calendar-pair-symbol" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><circle class="calendar-sun-dot" cx="10" cy="10" r="1.5"/></svg><svg class="calendar-pair-symbol" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 2.5v15M2.5 10h15"/></svg></button><button type="button" id="calendarToday">Today</button><button type="button" id="calendarYearToggle" aria-pressed="false" aria-controls="toolsCalendarYearView">Full year</button></div>
+              </div>
+              <div id="toolsCalendarMonthView" class="tools-calendar-layout"><div><div class="tools-calendar-week" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+              <div id="toolsCalendarDays" class="tools-calendar-days"></div></div><aside class="tools-calendar-weekly" aria-label="Weekly cards"><div class="tools-calendar-weekly-heading">Weekly</div><div id="toolsCalendarWeekly" class="tools-calendar-weekly-list"></div></aside></div>
+              <p id="calendarExceptionNote" class="tools-calendar-exception-note" role="status" hidden></p>
+              <div id="toolsCalendarYearView" class="tools-calendar-year-view" hidden></div>
+              <p class="tools-calendar-hint">Select a day to explore its card</p>
+            </section>
+            <section id="toolsGematriaPanel" class="tools-gematria" role="tabpanel" aria-labelledby="settingsGematriaTab" hidden>
+              <label for="gematriaInput" class="gematria-label">Name or phrase</label>
+              <textarea id="gematriaInput" rows="2" maxlength="1000" placeholder="Enter a name or phrase" spellcheck="false" aria-describedby="gematriaHelp"></textarea>
+              <p id="gematriaHelp" class="gematria-help">a–z = 1–26 · A–Z = 27–52. Other characters are ignored.</p>
+              <div id="gematriaResult" class="gematria-result" aria-live="polite"><p class="gematria-empty">Enter letters to reveal a card.</p></div>
+            </section>
+            <section id="readingSettingsPanel" role="tabpanel" aria-labelledby="settingsArrangeTab" hidden>
+              <p class="nc-order-help">Choose what to show and arrange items within each group.</p>
+              <ol id="ncOrderList"></ol>
+            </section>
+            <section id="finderCalculatorPanel" role="tabpanel" aria-labelledby="settingsCalculatorTab" hidden style="width:min(100%, 32rem); margin:1rem auto;"><iframe title="52 Calculator" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;52 Calculator&lt;/title&gt;
+&lt;style&gt;
+/* ════════════════════════════════════════════════════════════════
+   site.css — shared tokens, reset, typography, and site header
+   All pages link this. Page-specific styles stay in inline &lt;style&gt;.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Design tokens ─────────────────────────────────────────────── */
+:root {
+  /* ── Dark deep-purple theme ──────────────────────────────────────
+     Warm gold accents on a deep violet ground. The AA helper tokens
+     (--gold-ink, --ink-muted) are LIGHT here — small text sits on the
+     dark surfaces, not on a light page. Playing-card faces keep their
+     own light paper (--card-paper) so the dark suit pips stay legible. */
+  --bg:            #100c1e;   /* deepened to the hero&#x27;s darker violet (site-wide) */
+  --surface:       #221a3d;
+  --surface-alt:   #2b2150;
+  --text:          #f1ecfa;
+  --muted:         #9a90b8;   /* large / decorative only */
+  --secondary:     #c8bfe0;
+  --accent:        #1b1436;   /* header / footer / band chrome */
+  --gold:          #c79a54;
+  --gold-light:    #2e2450;   /* subtle violet highlight fill (was a cream) */
+  --gold-ink:      #ddbb78;   /* light gold — small text on dark bg (AA 4.5:1) */
+  --ink-muted:     #b7add6;   /* light muted — small text on dark bg (AA 4.5:1) */
+  --rule:          #2c2550;
+  --rule-strong:   #443a6b;
+  --yang:          #1a1916;   /* card pip / yang line — used on light paper */
+  --red:           #b53030;   /* hearts / diamonds — on light card paper */
+  --green:         #1a1916;   /* clubs (render near-black on card paper) */
+  --navy:          #1a1916;   /* spades */
+  --text-muted:    #9a90b8;
+  --card-dark:     #1a1916;
+  --card-paper:    #f7f1e6;   /* warm paper for playing-card faces */
+  --band:          #241c46;   /* full-bleed dark band (deep violet) */
+  --border:        #322a55;
+  --code-bg:       #241c46;
+  --r-sm:          6px;
+  --r-md:          12px;
+  --r-lg:          20px;
+  --card-radius:   4px;        /* playing-card faces — gentle real-card corners */
+  --sh-sm:         0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+  --sh-md:         0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+  --sh-lg:         0 16px 48px rgba(0,0,0,.12), 0 4px 16px rgba(0,0,0,.06);
+  --max-w:         1140px;
+  --quadration-max-w: 560px;         /* shared cap for the quadration grid + finder grids that should track its size (life-script + connection mini-grids use 75% of this) */
+  --section-gap:   var(--space-7);   /* vertical gap between stacked page sections (3rem) */
+  --serif:         &#x27;Lora&#x27;, Georgia, serif;
+  --sans:          &#x27;Inter&#x27;, system-ui, sans-serif;
+  --mono:          &#x27;SFMono-Regular&#x27;, ui-monospace, Menlo, Consolas, monospace;
+  --ease:          .18s ease;
+  /* ── Spacing scale ───────────────────────────────────────────────
+     The intended rhythm. Adopt these for paddings/margins/gaps instead of
+     typing rem values; --section-gap is derived from it. Existing off-grid
+     values (.4/.45/.85/1.25/1.75rem…) are being migrated incrementally. */
+  --space-1:       .25rem;
+  --space-2:       .5rem;
+  --space-3:       .75rem;
+  --space-4:       1rem;
+  --space-5:       1.5rem;
+  --space-6:       2rem;
+  --space-7:       3rem;
+  /* ── Type scale ──────────────────────────────────────────────────
+     Role-named font sizes; the heading registers + .subtitle/.lead are
+     wired to these. New UI text should reference a token, not a literal. */
+  --text-xs:       .8rem;     /* small caps labels, subtitle */
+  --text-sm:       .85rem;    /* h3 / small text */
+  --text-base:     1rem;      /* body (html root is 16px) */
+  --text-md:       1.05rem;   /* lead paragraph */
+  --text-lg:       1.35rem;   /* h2 */
+  --text-xl:       2.2rem;    /* h1 */
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* Root background matches the theme so the desktop overscroll/rubber-band area
+   (when you scroll past the top or bottom) shows the deep-violet ground, not a
+   white bar. overscroll-behavior-y also stops the bounce where supported.
+   IMPORTANT: the starfield canvas (.stars-bg) is position:fixed; z-index:-1, so
+   the stars only show through when the violet ground is painted on the ROOT
+   (html) BEHIND that negative layer — a background on &lt;body&gt; paints ABOVE the
+   canvas and hides the stars. So starry pages put the gradient on the root via
+   html:has(body.starry) below, and body.starry itself stays transparent. The
+   solid var(--bg) here is the fallback (keeps overscroll violet; flat violet if
+   :has is unsupported). */
+html { font-size: 16px; scroll-behavior: smooth; scrollbar-gutter: stable; background: var(--bg); overscroll-behavior-y: none; }
+/* Starry pages: paint the drifting-star ground on the root so it sits behind the
+   z-index:-1 star canvas (see .stars-bg + body.starry). */
+html:has(body.starry) {
+  background: radial-gradient(125% 85% at 50% -8%, #1a1433 0%, #110c21 46%, #0e091a 100%) fixed;
+  /* the shorthand above resets background-color to transparent; restore the solid
+     violet base so overscroll / svh-dvh gaps never flash white behind the fixed
+     gradient (the gradient still paints the viewport on top). */
+  background-color: var(--bg);
+}
+/* Lock horizontal scroll site-wide. Needs to be on BOTH html and body for
+   iOS Safari (body-only is ignored), plus overscroll-behavior-x to kill
+   the rubber-band elastic pan. position: relative gives layout a fresh
+   containing block (another iOS-Safari requirement). */
+html { overflow-x: hidden; overscroll-behavior-x: none; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  position: relative;
+  max-width: 100vw;
+}
+
+/* ── Starfield background (shared) ─────────────────────────────────
+   A fixed, full-viewport canvas of drifting, twinkling stars sits behind
+   all content on a deep-violet ground. Opt in with `body.starry` + a
+   `&lt;canvas class=&quot;stars-bg&quot;&gt;`; the animation lives in js/stars.js and
+   honours prefers-reduced-motion. The violet gradient (the homepage&#x27;s
+   established starfield ground, kept verbatim) is painted on the ROOT via
+   html:has(body.starry) above, so it sits behind the z-index:-1 canvas;
+   body.starry stays transparent so it never paints over the stars. */
+body.starry {
+  background: transparent;
+}
+.stars-bg {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: -1; pointer-events: none;
+}
+a { color: inherit; text-decoration: none; }
+
+/* Visible keyboard focus, site-wide (a11y 2.4.7). Uses :focus-visible so it
+   only shows for keyboard/AT users, never on mouse click. */
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 3px; }
+
+/* Skip-to-content link (a11y 2.4.1) — off-screen until focused, then slides in
+   over the sticky header. Injected with the header by site.js. */
+.skip-link {
+  position: fixed; left: 12px; top: -56px; z-index: 300;
+  background: var(--accent); color: #fff;
+  padding: .6rem 1rem; border-radius: 0 0 10px 10px;
+  font-size: .8rem; font-weight: 600; letter-spacing: .04em;
+  text-decoration: none; transition: top .16s ease;
+}
+.skip-link:focus { top: 0; }
+.main-anchor { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* Visually-hidden utility — content stays in the DOM (and the accessibility/SEO
+   document outline) but is clipped from view. Used for the per-page &lt;h1 class=&quot;vh&quot;&gt;
+   that gives each tool page a proper top-level heading without a visible title.
+   Promoted here from index.html now that several pages use it. */
+.vh {
+  position: absolute !important; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* ── Typography ─────────────────────────────────────────────────── */
+h1 {
+  font-family: var(--serif);
+  font-size: var(--text-xl);
+  font-weight: normal;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+}
+h2 {
+  font-family: var(--serif);
+  font-size: var(--text-lg);
+  font-weight: normal;
+  margin: 3.5rem 0 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+h3 {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 2rem 0 0.75rem;
+}
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+.subtitle {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.04em;
+}
+.lead {
+  font-size: var(--text-md);
+  color: var(--secondary);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+hr { border: none; border-top: 1px solid var(--rule); margin: 2rem 0; }
+code {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  background: var(--code-bg);
+  padding: 0.12em 0.4em;
+  border-radius: 3px;
+}
+pre {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  background: var(--code-bg);
+  padding: 1.25rem 1.5rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  line-height: 1.6;
+  margin: 1.25rem 0;
+  border-left: 3px solid var(--accent);
+}
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+.page-content {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem 6rem;
+  align-self: center;
+}
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Uniform vertical rhythm between stacked top-level sections. Mark each section
+   `.page-section`; the gap between any two adjacent ones is a single margin
+   driven by --section-gap (change it in :root to re-space every such page at
+   once). A section&#x27;s OWN padding is then just internal framing, not the gap —
+   keep section vertical padding at 0 and let this rule own the spacing. The
+   first .page-section gets no top margin, so a page&#x27;s top inset is set wherever
+   that first section&#x27;s padding/header sits. Pages whose sections live in
+   different wrappers (e.g. iching, astrology) can&#x27;t use this sibling rule, so
+   they reference var(--section-gap) directly on their own gap. */
+.page-section + .page-section { margin-block-start: var(--section-gap); }
+
+/* ── Section minimise/maximise (shared) ────────────────────────────
+   Opt-in pattern: wrap a .page-section&#x27;s body in .section-bodywrap &gt;
+   .section-bodymin, replace the .section-label span with a button.section-toggle
+   (containing the label + a .section-chev SVG), and toggleSection(id) (in
+   site.js) flips .section-open on the parent .page-section. CSS handles the
+   grid-rows 0fr → 1fr unfurl, the chevron rotation, and prefers-reduced-motion. */
+.page-section .section-toggle {
+  background: none; border: none; padding: 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  gap: .55rem;
+  margin: 0 auto;
+  font: inherit;
+}
+.page-section .section-toggle:focus-visible {
+  outline: 2px solid var(--gold); outline-offset: 4px;
+  border-radius: 4px;
+}
+.page-section .section-toggle .section-label,
+.page-section .section-toggle .hex-ref-label { margin: 0; }
+.section-chev {
+  width: 11px; height: 11px;
+  color: var(--gold); opacity: .55;
+  flex-shrink: 0;
+  transition: transform .25s ease, opacity .18s;
+}
+.section-toggle:hover .section-chev,
+.section-toggle:focus-visible .section-chev { opacity: 1; }
+.page-section.section-open .section-chev { transform: rotate(180deg); }
+.section-bodywrap {
+  display: grid; grid-template-rows: 0fr;
+  margin-top: 0;
+  transition: grid-template-rows .4s ease, margin-top .4s ease;
+}
+.page-section.section-open .section-bodywrap {
+  grid-template-rows: 1fr;
+  margin-top: 1rem;
+}
+/* A little top room inside the (overflow-hidden) collapse wrapper: leaves a slight
+   gap below each section subtitle and stops top-poking decorations — a selected
+   button&#x27;s gold outline, the saved-birthday badge — from being clipped, while open.
+   Kept at 0 while collapsed (below) — otherwise this padding is the one part of
+   the wrapper that DOESN&#x27;T shrink with grid-template-rows: 0fr (padding isn&#x27;t
+   compressed by the 0fr track the way content height is), so a sliver of exactly
+   that padding&#x27;s height stays visible — the very decorations it was added to
+   protect (a selected tool&#x27;s gold outline, a saved-birthday badge) go on peeking
+   out the top of an otherwise-collapsed section. */
+.section-bodymin { overflow: hidden; min-height: 0; padding-top: 0; transition: padding-top .4s ease; }
+.page-section.section-open .section-bodymin { padding-top: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .section-bodywrap { transition: none; }
+  .section-chev { transition: none; }
+  .section-bodymin { transition: none; }
+}
+
+/* ── Site header and nav ────────────────────────────────────────── */
+.site-header {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--accent);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.site-header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,.25); }
+/* Blended header on starry pages — the sticky bar melts into the starfield:
+   transparent at rest, easing to a faint deep-violet veil once the page scrolls
+   (site.js toggles .scrolled). The logo/burger/nav are already light, so they
+   read on the dark ground; the open nav dropdown keeps its own --accent bg. */
+body.starry .site-header { background: transparent; border-bottom-color: transparent; }
+body.starry .site-header.scrolled {
+  background: rgba(22, 16, 41, .82);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-bottom-color: rgba(255, 255, 255, .06);
+}
+.sh-inner {
+  display: flex; align-items: center; height: 64px;
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 0 2rem; position: relative;
+}
+.sh-logo {
+  font-family: var(--serif); font-size: 1.45rem; font-weight: 400;
+  letter-spacing: .01em; color: rgba(255,255,255,.92);
+  text-decoration: none; position: absolute;
+  left: 50%; transform: translateX(-50%); white-space: nowrap;
+}
+.sh-logo .suit { color: var(--gold); }
+/* Menu trigger: a labelled, &gt;=44px touch target (a11y 2.5.5) so it reads as
+   navigation, not a bare glyph. */
+.burger {
+  background: none; border: none; cursor: pointer;
+  margin-left: auto; min-height: 44px; padding: 0 4px;
+  display: flex; align-items: center; gap: 9px; z-index: 1;
+  color: rgba(255,255,255,.85);
+}
+/* Burger bars sit in an absolutely-positioned stack so they can rotate into
+   an X when the menu is open. site.js toggles .is-open on the burger. */
+.burger-bars { position: relative; width: 22px; height: 16px; }
+.burger-bars span {
+  display: block; position: absolute; left: 0;
+  width: 22px; height: 2px;
+  background: currentColor; border-radius: 2px;
+  transition: transform .25s ease, opacity .2s ease;
+}
+.burger-bars span:nth-child(1) { top: 0; }
+.burger-bars span:nth-child(2) { top: 7px; }
+.burger-bars span:nth-child(3) { top: 14px; }
+.burger.is-open .burger-bars span:nth-child(1) { transform: translateY(7px)  rotate(45deg); }
+.burger.is-open .burger-bars span:nth-child(2) { opacity: 0; }
+.burger.is-open .burger-bars span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Frosted-glass menu — semi-transparent --accent (rgba 27,20,54 ≈ --accent
+   #1b1436 at ~72%) + 14px backdrop blur, with a hairline gold top edge so
+   it reads as the header unfurling rather than a panel floating beneath
+   it. Always in flow (display:flex) so it can fade + slide; visibility
+   gates focusability while closed. */
+.sh-nav {
+  display: flex; flex-direction: column;
+  position: absolute; top: 64px; right: 0;
+  /* Size to the widest item — currently CELESTIAL KEYS sets the width.
+     max-content + .sh-nav a { white-space: nowrap } keeps every row on
+     one line without leaving a desktop-sized gap on the right. */
+  width: max-content;
+  max-width: calc(100vw - 1rem);
+  padding: 6px;
+  background: rgba(27, 20, 54, .72);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+          backdrop-filter: blur(14px) saturate(140%);
+  /* No outer hairline border — relies on the gold inset top edge + the
+     atmospheric shadow to define the panel. Reads cleaner on the dark
+     ground than the previous 1px white-alpha rim. */
+  border: none;
+  border-radius: 0 0 16px 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(199,154,84,.32),
+    inset 1px 0 0 rgba(199,154,84,.10),
+    inset -1px 0 0 rgba(199,154,84,.10),
+    0 18px 44px rgba(0,0,0,.55);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .2s ease, transform .25s ease, visibility 0s linear .25s;
+}
+.sh-nav.open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: none;
+  transition: opacity .2s ease, transform .25s ease, visibility 0s linear 0s;
+}
+.sh-nav a {
+  display: flex; align-items: center; min-height: 44px;
+  font-size: .72rem; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 0 1rem 0 calc(1rem - 3px);
+  border-left: 3px solid transparent;
+  border-radius: 0 6px 6px 0;
+  color: rgba(255,255,255,.82); white-space: nowrap;
+  transition: background .18s, color .18s, border-color .18s;
+}
+.sh-nav a:hover,
+.sh-nav a:focus-visible {
+  background: rgba(199,154,84,.12);
+  color: var(--gold-ink);
+  border-left-color: rgba(199,154,84,.45);
+  outline: none;   /* the gold rail + soft tint IS the focus indicator */
+}
+/* Deliberately no auto-highlight for the current page — the menu reads
+   uniformly quiet until the user hovers / focuses. The page title in
+   the header top-left already names where you are. .active stays in
+   the DOM (set by site.js) for any future semantic use. */
+.sh-nav a.active { /* intentionally empty */ }
+
+@media (prefers-reduced-motion: reduce) {
+  .sh-nav { transition: visibility 0s; transform: none; }
+  .burger-bars span { transition: none; }
+}
+.sh-nav hr { border: none; border-top: 1px solid rgba(255,255,255,.12); margin: .25rem 0; }
+.sh-nav .nav-heading {
+  font-size: .6rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(255,255,255,.5);
+  padding: .6rem 1rem .2rem;
+  border-top: 1px solid rgba(255,255,255,.1);
+  margin-top: .25rem;
+}
+/* First group label sits flush at the top of the menu (no divider above it). */
+.sh-nav .nav-heading:first-child { border-top: none; margin-top: 0; padding-top: .2rem; }
+.sh-nav .tool-btn {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.82); border-radius: 8px;
+  min-height: 44px; padding: 0 1rem; font-size: .72rem; font-weight: 600;
+  letter-spacing: .04em; cursor: pointer; text-align: left;
+  transition: background .18s, color .18s; white-space: nowrap; width: 100%;
+}
+.sh-nav .tool-btn:hover { background: var(--gold); color: var(--accent); }
+@media (max-width: 560px) {
+  .sh-inner { padding: 0 1rem; }
+  .sh-logo { font-size: 1.15rem; }
+}
+
+/* ── Buttons (shared) ───────────────────────────────────────────────
+   The canonical general-purpose button. Base = a neutral utility button
+   (surface-alt fill, hairline border, warming gold hover); modifiers cover
+   the common variants. Domain controls keep their own look on purpose — the
+   calculator keypad, the I Ching cast-icon buttons, and the in-game buttons
+   are deliberate sub-languages, not this button. New ordinary buttons use
+   `.btn` (+ a modifier) so they inherit the system for free. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
+  background: var(--surface-alt); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: .4rem .85rem;
+  font-family: var(--sans); font-size: .75rem; font-weight: 500; letter-spacing: .03em;
+  color: var(--secondary); cursor: pointer; white-space: nowrap;
+  transition: background var(--ease), border-color var(--ease), color var(--ease);
+}
+.btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-light); }
+.btn:disabled { opacity: .4; cursor: default; }
+/* Primary call-to-action: gold fill, dark ink. */
+.btn--gold { background: var(--gold); border-color: transparent; color: var(--accent); }
+.btn--gold:hover { background: var(--gold-ink); color: var(--accent); }
+/* Secondary: transparent until hover. */
+.btn--ghost { background: transparent; }
+/* Square icon button (pairs with an inline SVG). */
+.btn--icon { padding: .4rem; }
+
+/* ── Shared playing-card faces ──────────────────────────────────────
+   Canonical copy used by cardsoflife, quadrations and astrology.
+   iching.html keeps its own px-tuned variant (small cast cards) which
+   overrides these by cascade order. Pages add their own sizing /
+   interactivity (cursor, hover, width) on top of this base. */
+.spread-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--card-paper);          /* cards stay on light paper in the dark theme */
+  border: 1px solid #e3d8c4;
+  border-radius: var(--card-radius);
+  container-type: inline-size;
+  aspect-ratio: 5 / 7;
+}
+.spread-card.hearts,  .spread-card.diamonds { color: var(--red); }
+.spread-card.clubs  { color: var(--green); }
+.spread-card.spades { color: var(--navy); }
+.spread-card.joker  { color: var(--gold); }
+/* Court figures — and now the Joker&#x27;s original &quot;Quinta Essentia&quot; art — have a
+   transparent body, so they sit on the parchment card face like the number cards.
+   The Joker art is full-bleed (fills the card) so its four suits reach the corners. */
+.spread-card.joker .court-art { inset: 0; width: 100%; height: 100%; }
+.card-corner {
+  position: absolute; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 1px; line-height: 1;
+}
+.card-tl { top: 2.5%; left: 4%; }
+.card-br { bottom: 2.5%; right: 4%; transform: rotate(180deg); }
+.cc-rank { font-family: var(--serif); font-size: 22cqw; font-weight: 500; line-height: 1; }
+.cc-suit { font-size: 14cqw; line-height: 1; }
+/* Joker only: &quot;oker&quot; descends vertically beneath the Jack-style &quot;J&quot; so the corner
+   reads &quot;Joker&quot;, using the same serif + corner position as the court indices. */
+.cc-rest { font-family: var(--serif); font-size: 9cqw; font-weight: 500; line-height: 1.04;
+  writing-mode: vertical-rl; text-orientation: upright; letter-spacing: .2cqw; margin-top: .4cqw; }
+.card-pips { position: absolute; top: 18%; bottom: 18%; left: 12%; right: 12%; }
+.pip {
+  position: absolute; transform: translate(-50%, -50%);
+  font-size: 20cqw; line-height: 1; user-select: none; pointer-events: none;
+}
+.pip.inv { transform: translate(-50%, -50%) rotate(180deg); }
+.pip.ace { font-size: 44cqw; }
+.pip-svg { width: 1em; height: 1em; fill: currentColor; display: block; }
+.court-art {
+  position: absolute; inset: 8% 5%;
+  width: 90%; height: 84%;
+  object-fit: contain; object-position: center;
+}
+/* Alternate &quot;pips-only&quot; courts: each court renders BOTH the figure (.court-art +
+   .court-pip) and a pip layout (.card-pips.court-only); body.pips-only swaps them
+   with pure CSS — no re-render. Toggled from the Quadrations controls. The Joker
+   keeps its emblem (it has no pip form), so it&#x27;s excluded. */
+.court-only { display: none; }
+body.pips-only .spread-card:not(.joker) .court-art,
+body.pips-only .spread-card:not(.joker) .court-pip { display: none; }
+body.pips-only .spread-card:not(.joker) .court-only { display: block; }
+/* Suit pip beside the court figure&#x27;s head (position set inline per card), using
+   the same glyph + suit colour as the number cards and matched to their size. */
+.court-pip {
+  position: absolute; z-index: 1;
+  transform: translate(-50%, -50%);
+  font-size: 20cqw; line-height: 1; pointer-events: none;
+}
+.card-face {
+  position: absolute; inset: 5%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+}
+.card-face-letter { font-family: var(--serif); font-size: 42cqw; font-weight: 400; line-height: 1; }
+.card-face-sym    { font-size: 24cqw; opacity: .75; }
+
+/* ── Shared card back (engine-turned gold rosette + I Ching cash coin) ──
+   The single source of truth for the card-back design, reused by the homepage
+   casting field (.mini), the Cards of Life life-script riffle (.ls-back), and
+   the I Ching cast deal. Purely visual + self-contained (fills its parent, sets
+   its own --cash-hole) — each context adds its own positioning / flip transform.
+   Markup: &lt;div class=&quot;card-back&quot;&gt;&lt;span class=&quot;cb-coin&quot;&gt;&lt;/span&gt;&lt;/div&gt;. */
+.card-back {
+  position: absolute; inset: 0;
+  border-radius: inherit; overflow: hidden;
+  --cash-hole: 30%;   /* cash-coin square hole, as a % of the coin */
+  background: linear-gradient(155deg, #2a2154 0%, #1c1440 60%, #160e2e 100%);
+  border: 1px solid rgba(221,187,120,.42);
+}
+/* inner frame line */
+.card-back::before {
+  content: &#x27;&#x27;; position: absolute; inset: 8%; border-radius: 2px;
+  border: 1px solid rgba(221,187,120,.45);
+}
+/* engine-turned guilloché rosette */
+.card-back::after {
+  content: &#x27;&#x27;; position: absolute; left: 50%; top: 50%;
+  width: 78%; aspect-ratio: 1; transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, rgba(221,187,120,.3) 0 1px, transparent 1px 4px),
+    repeating-conic-gradient(from 0deg, rgba(221,187,120,.18) 0deg 2deg, transparent 2deg 9deg);
+  -webkit-mask: radial-gradient(circle, #000 56%, transparent 60%);
+          mask: radial-gradient(circle, #000 56%, transparent 60%);
+}
+/* the cash coin at the hub */
+.card-back .cb-coin {
+  position: absolute; left: 50%; top: 50%; z-index: 2;
+  container-type: inline-size;
+  width: 42%; aspect-ratio: 1; transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 30%, #efd79e 0%, #d3aa61 42%, #a9813f 72%, #75582a 100%);
+  border: 1px solid #5a4220;
+  box-shadow: inset 0 1px 2px rgba(255,246,222,.5), inset 0 -2px 4px rgba(58,38,14,.55), 0 2px 5px rgba(0,0,0,.5);
+  display: flex; align-items: center; justify-content: center;
+}
+.card-back .cb-coin::after {
+  content: &#x27;&#x27;; width: var(--cash-hole); height: var(--cash-hole); border-radius: 1.5px;
+  background: radial-gradient(circle at 50% 38%, #2a1f12, #120c06);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.85);
+  border: 1px solid #5a4220;
+}
+
+/* ── Shared spread grid (7-column card layout) ──────────────────── */
+.spread-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: .45rem .35rem;
+  align-items: center;
+  width: 100%;
+  max-width: var(--quadration-max-w);
+  margin: 0 auto;
+}
+.planet-col-label {
+  text-align: center; font-size: 1.5rem;
+  color: var(--text-muted); padding-top: .4rem; line-height: 1;
+}
+.crown-row { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(7, 1fr); gap: .45rem .35rem; }
+
+/* Seats + displacement ghost chips. Each seat carries two chips read against
+   its LIFE occupant: .sl-ghost-d names the card it displaces (the seat&#x27;s
+   Spirit owner), .sl-ghost-b the card it is displaced by. The grid classes
+   .sl-ghosts / .sl-ghosts-by (buildSpreadGrid&#x27;s showGhosts — the Quadration
+   Life view&#x27;s Displaces / Displaced-by pills) pick which set renders. Cards
+   are re-seated after the chips in DOM order, so chips keep order:1 to stay
+   under the card. */
+.sl-seat { min-width: 0; display: flex; flex-direction: column; }
+.sl-seat .spread-card { order: 0; }
+/* The two chips share one row under the card, side by side. */
+.sl-ghost-row { order: 1; display: flex; justify-content: center; gap: .22rem; margin-top: .22rem; }
+.sl-ghost {
+  display: none;
+  padding: .08rem .3rem;
+  font-family: var(--sans); font-size: .55rem; font-weight: 600;
+  letter-spacing: .03em; line-height: 1.2; border-radius: 4px;
+  background: rgba(253,250,245,.82); /* --surface at 82% for the navy band */
+  white-space: nowrap; user-select: none; pointer-events: none;
+}
+.spread-grid.sl-ghosts .sl-ghost-d,
+.spread-grid.sl-ghosts-by .sl-ghost-b { display: block; }
+.sl-ghost-self { visibility: hidden; }
+.sl-ghost.hearts, .sl-ghost.diamonds { color: var(--red); }
+.sl-ghost.clubs  { color: var(--green); }
+.sl-ghost.spades { color: var(--navy); }
+
+/* ── Compare-card popup (shared chrome) ─────────────────────────────
+   The card-detail overlay used by cardsoflife, iching, quadrations and
+   astrology. The shared visual chrome lives here; each page keeps only its
+   own overrides in its inline &lt;style&gt; (overlay z-index, cardFlip flip
+   direction, #ccFace reset, footer variant, displacement-link styling).
+   Canonical tokens; personality text uses Lora (see add-site-page notes). */
+.ccard-overlay.open { display: flex; }
+/* Lock background scroll while a fullscreen popup overlay is open (the card
+   popup or the hexagram popup, on any page). scrollbar-gutter:stable on &lt;html&gt;
+   (see the reset) keeps the layout from shifting when the scrollbar is hidden. */
+html:has(.ccard-overlay.open),
+html:has(.hx-overlay.open) { overflow: hidden; }
+.ccard-popup {
+  background: var(--surface); border-radius: var(--r-lg);
+  /* Permanent gold ring to match the hexagram popup. */
+  box-shadow: 0 0 0 1.5px var(--gold), var(--sh-lg); max-width: 420px; width: 100%;
+  position: relative;
+  animation: cardFlip .25s cubic-bezier(.23,1,.32,1);
+  display: flex; flex-direction: column;
+  height: 460px; max-height: 88vh; overflow: hidden;
+}
+.ccard-close {
+  position: absolute; top: .4rem; right: .9rem; z-index: 2;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--surface-alt); border: 1px solid var(--border);
+  font-size: .78rem; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--ease);
+}
+.ccard-close:hover { background: var(--border); color: var(--text); }
+/* Solar Value banner — pinned at the very top of the popup */
+.ccard-solar {
+  display: flex; align-items: center; justify-content: center;
+  padding: .45rem 1rem;
+  background: rgba(217,184,122,.08);
+  border-bottom: 1px solid var(--border);
+}
+.ccard-solar-value {
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 700;
+  color: var(--gold); line-height: 1;
+}
+/* Period reading: hide solar banner */
+/* (Previously hid .ccard-solar in period popups — restored so the Your-Cards
+   popups carry the same SV badge as the rest of the compare-card popups.) */
+.ccard-header {
+  display: flex; gap: 1.35rem; align-items: flex-start;
+  padding: 1.35rem 1.75rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.ccard-info { flex: 1; min-width: 0; padding-top: .1rem; }
+.ccard-name {
+  font-family: var(--serif); font-size: 1.45rem; font-weight: 400;
+  line-height: 1.15; margin-bottom: .18rem;
+}
+.ccard-subtitle {
+  font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted);
+}
+.ccard-keywords {
+  padding: .55rem 1.75rem;
+  border-top: 1px solid var(--border);
+  font-size: .72rem; color: var(--gold);
+  letter-spacing: .03em; line-height: 1.55;
+  text-align: center;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.ccard-planets {
+  font-size: .62rem; letter-spacing: .08em;
+  color: var(--muted); margin-top: .25rem;
+}
+.ccard-body {
+  flex: 1; overflow-y: auto; min-height: 0;
+  padding: 1.2rem 1.75rem;
+}
+.ccard-personality {
+  font-family: &#x27;Lora&#x27;, Georgia, serif;
+  font-size: .875rem; color: var(--secondary); line-height: 1.82;
+  text-align: center;
+}
+/* Displacement card tokens (rank+suit) — white tiles like the calendar chips,
+   so the black clubs/spades read on the dark popup (--surface) and finder ground.
+   Shared by the compare popup and the finder/relationship displacement lines. */
+.cc-dcard {
+  display: inline-block; background: rgba(255,255,255,.94); color: var(--card-dark);
+  border: 0; border-radius: var(--r-sm);
+  padding: .06em .42em; margin: 0 .08em;
+  font-family: var(--serif); font-weight: 600; font-size: .95em; line-height: 1.25;
+  vertical-align: baseline;
+}
+.cc-dcard.hearts, .cc-dcard.diamonds { color: var(--red); }
+.cc-dcard.clubs,  .cc-dcard.spades   { color: var(--card-dark); }
+button.cc-dcard { cursor: pointer; transition: box-shadow var(--ease), transform var(--ease); }
+button.cc-dcard:hover { box-shadow: var(--sh-sm); transform: translateY(-1px); }
+@media (prefers-reduced-motion: reduce) { button.cc-dcard:hover { transform: none; } }
+
+/* ── Single-gate hexagram popup (shared chrome) ─────────────────────
+   Used by iching, hexagrams and astrology. Shared chrome here; each page
+   keeps its own overrides inline: .hx-overlay z-index, .hx-header /
+   .hx-body / .hx-keynote padding, .hx-shadow margin, plus astrology&#x27;s
+   .hx-line/.hx-line-tag. Readable oracle text (kw/image/keynote) uses
+   --gold-ink for AA contrast. */
+.hx-overlay.open { display: flex; }
+.hx-popup {
+  background: var(--surface); border-radius: 14px;
+  /* Permanent gold ring (was the keyboard-focus outline only) + depth shadow. */
+  box-shadow: 0 0 0 1.5px var(--gold), 0 20px 60px rgba(0,0,0,.3);
+  max-width: 420px; width: 100%; position: relative;
+  display: flex; flex-direction: column;
+  height: 480px; max-height: 88vh; overflow: hidden;
+  animation: hxIn .25s cubic-bezier(.23,1,.32,1);
+}
+@keyframes hxIn { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+.hx-close {
+  position: absolute; top: .9rem; right: .9rem; z-index: 2;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--surface-alt); border: 1px solid var(--rule);
+  font-size: .78rem; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--ease);
+}
+.hx-close:hover { background: var(--rule); color: var(--text); }
+.hx-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 2rem; height: 3.5rem; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 1.5rem; opacity: .45; cursor: pointer;
+  background: none; border: none; transition: opacity var(--ease), color var(--ease);
+}
+.hx-nav:hover { opacity: 1; color: var(--text); }
+.hx-prev { left: .15rem; } .hx-next { right: .15rem; }
+.hx-fig { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: .4rem; }
+.hx-fig-svg { background: var(--band); border-radius: 8px; padding: .65rem .75rem; --yang: rgba(255,255,255,.9); }
+.hx-fig-num { font-family: var(--mono); font-size: .58rem; color: var(--muted); letter-spacing: .05em; }
+.hx-id { flex: 1; min-width: 0; padding-top: .15rem; }
+.hx-kw { font-family: var(--mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: .35rem; }
+.hx-name { font-family: var(--serif); font-size: 1.85rem; font-weight: 400; line-height: 1.1; margin-bottom: .35rem; }
+.hx-trig { font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.hx-image { font-family: var(--serif); font-style: italic; font-size: 1.05rem; line-height: 1.45; color: var(--gold-ink); padding: 1px 28px 0; text-align: center; }
+.hx-body p { font-family: var(--serif); font-size: 16px; line-height: 1.8; color: var(--text); margin-bottom: 10px; text-align: center; }
+
+/* ── Site footer ────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--accent);
+  border-top: 1px solid rgba(255,255,255,.08);
+  margin-top: auto;
+}
+/* On starry pages the footer melts into the starfield too — transparent with no
+   top rule, so the fan mark sits straight on the night sky (matches the header). */
+body.starry .site-footer { background: transparent; border-top-color: transparent; }
+.sf-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 2rem;
+  color: rgba(255,255,255,.62);   /* AA on the starfield ground (was .4 = 3.79:1) */
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+/* Rich footer — injected by site.js when .sf-inner is empty (pages with a
+   custom footer keep theirs untouched). Minimal: just the fan mark, thin. */
+.sf-inner.sf-rich {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: auto; padding: .6rem 2rem;
+  text-transform: none; letter-spacing: normal; font-weight: 400;
+}
+.sf-mark { display: inline-flex; line-height: 0; }
+.sf-mark svg, .sf-mark img { width: 48px; height: 48px; display: block; }
+.sf-spacer { display: block; }
+/* Discreet hexagram row — left of the footer on divination pages (iching +
+   cardsoflife). Each mark is subtle on the night sky and brightens on
+   hover/focus; keyboard-reachable via the global focus ring. */
+.sf-seeds { justify-self: start; display: inline-flex; align-items: center; gap: .6rem; }
+.sf-seed {
+  display: inline-flex; line-height: 0;
+  opacity: .2; transition: opacity var(--ease);
+}
+/* On pages with a single Seed link (legacy callers), keep the standalone mark
+   pinned to the start of the grid track the way it always was. */
+.sf-inner.sf-rich &gt; .sf-seed { justify-self: start; }
+.sf-seed svg { width: 15px; height: 17px; display: block; }
+.sf-seed:hover, .sf-seed:focus-visible { opacity: .85; }
+.sf-email {
+  justify-self: end;
+  font-family: var(--sans); font-size: clamp(.52rem, 1.7vw, .7rem); letter-spacing: .03em;
+  color: var(--gold); text-decoration: none; white-space: nowrap; min-width: 0;
+  transition: opacity var(--ease);
+}
+.sf-email:hover { opacity: .7; }
+.sf-email svg { display: block; }
+@media (max-width: 560px) {
+  .sf-inner.sf-rich { padding: .55rem 1rem; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Page transitions (shared)
+   Smooth same-origin navigations. Where the browser supports cross-
+   document View Transitions (current Chrome/Safari) it cross-fades the
+   old page into the new one natively — the shared starfield stays put,
+   so only the content dissolves. Browsers without them fall back to a
+   deep-violet veil wired in js/site.js. All off under reduced-motion.
+   ════════════════════════════════════════════════════════════════ */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .42s; }
+
+/* Veil fallback (non-VT browsers; toggled by js/site.js). A fixed wash in
+   the site&#x27;s own violet ground, so a leave dissolves to the same colour the
+   next page opens on — no white flash, no hard cut. */
+.pg-veil {
+  position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+  background: radial-gradient(125% 85% at 50% -8%, #1a1433 0%, #110c21 46%, #0e091a 100%);
+  opacity: 0; transition: opacity .34s ease;
+}
+.pg-veil.show { opacity: 1; }
+
+/* Content cross-fade for popup steppers (the ‹ › arrows). The popup shell
+   stays put — only its content region blinks over to the next entry, so
+   paging no longer reads as a flat jump-cut. Retriggered from JS via the
+   codebase idiom (remove → reflow → add). Opacity-only + short, matching
+   the page&#x27;s existing short-eased motion language. */
+@keyframes stepFade { from { opacity: 0; } to { opacity: 1; } }
+.step-fade { animation: stepFade .16s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  .pg-veil { transition: none; }
+  .ccard-popup, .hx-popup { animation: none; }
+  /* The closing flip is applied by .ccard-popup.closing (0,2,0), which out-ranks
+     the bare .ccard-popup guard above (0,1,0) — restate it here so reduced-motion
+     users don&#x27;t get the 3D flip-out. closeCompareCard() closes immediately in
+     that case (it can&#x27;t wait on an animationend that never fires). */
+  .ccard-popup.closing { animation: none; }
+  .step-fade { animation: none; }
+}
+
+
+:root {
+    /* Page aliases for the calculator UI — all reference canonical tokens in
+       css/site.css. Base tokens (--bg, --surface, --surface-alt, --border,
+       --secondary, --gold-light, --serif, --sans) inherit directly. */
+    --cal-border-strong: var(--rule-strong);
+    --txt:           var(--text);
+    --cal-muted:     var(--ink-muted);   /* a11y: light muted, AA on dark surface */
+    --key:           var(--surface-alt); /* keypad keys: surface-alt, above the panel */
+    --key-hi:        var(--rule-strong);
+    --op:            var(--accent);
+    --op-hi:         var(--band);
+    --cal-accent:    var(--gold-ink);   /* light gold for small text, AA on dark */
+    --cal-accent-hi: var(--gold);
+    --eq:            var(--gold);
+    --eq-hi:         var(--gold-ink);
+    --danger:        var(--red);
+  }
+  * { box-sizing: border-box; }
+  html { height: 100%; }
+  body {
+    margin: 0; min-height: 100%;
+    background: var(--bg);
+    color: var(--txt);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column;
+  }
+  .calc-stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 2rem 1rem; }
+  .sha { width: 420px; max-width: 96vw; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 18px; box-shadow: 0 4px 16px rgba(0,0,0,.06); zoom: 0.8; }
+  .sha-title { font-size: 11px; color: var(--cal-accent); letter-spacing: .14em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
+  .sha-row { display: flex; gap: 8px; }
+  .sha-input { flex: 1; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-family: monospace; font-size: 13px; color: var(--txt); outline: none; min-width: 0; }
+  .sha-input:focus { border-color: var(--cal-border-strong); }
+  .sha-input::placeholder { color: var(--cal-muted); }
+  .sha-btn { background: var(--op); color: #fff; border: none; border-radius: 10px; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .12s; flex-shrink: 0; }
+  .sha-btn:hover { background: var(--op-hi); }
+  .sha-btn.ghost { background: var(--surface-alt); color: var(--secondary); border: 1px solid var(--border); padding: 10px 12px; }
+  .sha-btn.ghost:hover { background: var(--key-hi); }
+  .sha-error { font-size: 11px; color: var(--danger); margin-top: 8px; min-height: 16px; }
+  .sha-output { margin-top: 10px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: none; }
+  .sha-out-row { display: flex; gap: 10px; margin-bottom: 7px; }
+  .sha-out-row:last-child { margin-bottom: 0; }
+  .sha-tag { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--cal-muted); min-width: 26px; padding-top: 1px; flex-shrink: 0; }
+  .sha-val { font-family: monospace; font-size: 11px; color: var(--txt); word-break: break-all; line-height: 1.6; }
+  .sha-val.hex { color: var(--cal-accent); }
+
+  .calc {
+    width: 420px; max-width: 96vw;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 16px 48px rgba(0,0,0,.12), 0 4px 16px rgba(0,0,0,.06);
+    zoom: 0.8;
+  }
+  .title { font-size: 11px; color: var(--cal-accent); letter-spacing: .14em; text-transform: uppercase; font-weight: 600; margin: 2px 4px 14px; }
+  .modebar { display: flex; gap: 6px; background: var(--surface-alt); border-radius: 12px; padding: 5px; margin-bottom: 14px; }
+  .mode {
+    flex: 1; padding: 9px 0; font-size: 14px; font-weight: 600;
+    background: transparent; color: var(--secondary); border-radius: 8px;
+  }
+  .mode:hover { background: var(--key-hi); color: var(--txt); }
+  .mode.active { background: var(--op); color: #fff; }
+  .mode.active:hover { background: var(--op); }
+  button:disabled { opacity: .35; cursor: default; }
+  button:disabled:hover { background: var(--key); }
+  .screen {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 8px 14px 12px;
+    margin-bottom: 16px;
+    text-align: right;
+    overflow: hidden;
+  }
+  .expr { min-height: 1.5em; font-size: 13px; color: var(--cal-muted); white-space: normal; overflow-wrap: anywhere; line-height: 1.5; }
+  /* Fixed two-row-tall display. The value wraps and is auto-scaled by JS to
+     fit this fixed height, so the screen never grows — a long value (e.g. a
+     128-bit number = 32 hex / 128 binary digits) just renders smaller and
+     wraps within the same box rather than pushing the keypad down. */
+  .main { font-family: &#x27;JetBrains Mono&#x27;, &#x27;Fira Mono&#x27;, monospace; font-size: 40px; font-weight: 400;
+          height: 96px; line-height: 1.2; overflow: hidden;
+          display: flex; align-items: flex-end; }
+  .main span { width: 100%; text-align: right; word-break: break-all; }
+  .main.error { color: var(--danger); }
+  .conv-panel { background: transparent; border: 0; padding: 0; margin-top: 6px; text-align: right; }
+  .conv { font-size: 12px; color: var(--cal-accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conv span { color: var(--cal-muted); }
+  .conv2 { margin-top: 3px; font-size: 12px; color: var(--cal-accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conv2 span { color: var(--cal-muted); }
+  .calc-card-toggle { display: block; width: 100%; margin: 0 0 10px; padding: 9px; font-size: 13px; color: var(--cal-accent); background: var(--surface-alt); }
+  .calc-card-input { display: grid; gap: 10px; }
+  .calc-card-input[hidden] { display: none; }
+  .calc-card-input > .eq { grid-column: auto; }
+  .calc-card-input .calc-keypad { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .calc-suit-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .calc-suit-row button[aria-pressed=&quot;true&quot;], .calc-card-input [data-rank][aria-pressed=&quot;true&quot;] { border-color: var(--gold); color: var(--gold-ink); background: #30291d; }
+  .calc-card-status, .calc-card-result { color: var(--cal-accent); font: 600 13px/1.4 var(--sans); text-align: right; }
+  .calc-card-status { text-align: center; min-height: 1.4em; }
+  .calc-card-result[hidden] { display: none; }
+  .grid { display: grid; gap: 10px; }
+  .calc-extra, .calc-keypad { display: grid; gap: 10px; }
+  .calc-extra { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  body.mode-52 .calc-extra { display: none; }
+  .calc-extra button { padding: 10px 0; font-size: 16px; }
+  .calc-keypad { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  button {
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 0; font-size: 20px; font-weight: 600;
+    color: var(--txt); background: var(--key);
+    cursor: pointer; transition: background .12s, transform .04s;
+    -webkit-user-select: none; user-select: none;
+  }
+  button:hover { background: var(--key-hi); }
+  button:active { transform: translateY(1px); }
+  .op { background: var(--op); color: #fff; border-color: transparent; }
+  .op:hover { background: var(--op-hi); }
+  .op.active { background: var(--gold); color: var(--accent); }
+  .fn { background: var(--surface-alt); color: var(--secondary); font-size: 17px; }
+  .fn:hover { background: var(--key-hi); }
+  .digit-ab { color: var(--cal-accent); }
+  .digit-hex { color: var(--cal-accent); }
+  .eq { grid-column: span 4; background: var(--eq); color: var(--accent); border-color: transparent; }
+  .eq:hover { background: var(--eq-hi); }
+  .hint { margin: 14px 4px 0; font-size: 11px; color: var(--cal-muted); line-height: 1.5; }
+
+  /* Mobile: compress so the whole calculator fits one screen without scrolling.
+     C–F are always shown now, so the keypad is a fixed 6 rows + equals in
+     every mode and the height never changes between BIN/DEC/DOZ/HEX. */
+  @media (max-width: 480px) {
+    .calc-stage { padding: 10px; justify-content: flex-start; gap: 12px; }
+    .calc, .sha { padding: 12px; border-radius: 16px; }
+    .title { margin: 0 2px 8px; }
+    .modebar { margin-bottom: 8px; padding: 4px; gap: 4px; }
+    .mode { padding: 7px 0; font-size: 13px; }
+    .screen { padding: 6px 12px 8px; margin-bottom: 8px; }
+    .main { font-size: 30px; height: 72px; }
+    .grid, .calc-extra, .calc-keypad { gap: 7px; }
+    button { padding: 11px 0; font-size: 18px; border-radius: 10px; }
+    .fn { font-size: 15px; }
+    .conv-panel { padding: 0; margin-top: 5px; }
+    .conv, .conv2 { font-size: 11px; }
+    .conv2 { margin-top: 2px; }
+    .hint { display: none; }
+  }
+
+
+[hidden] { display: none !important; }
+#mode52 { display:block; margin:.5rem auto; }
+#mode52[aria-pressed=&quot;true&quot;] { color:var(--gold, #c99a54); border-color:var(--gold, #c99a54); }
+body.mode-52 .sha { display:none; }
+
+#mode52 { display: none; }
+/* Calculator palette matches the Finder's black, white and gold. */
+:root {
+  --surface: #000; --surface-alt: #101010; --border: #49443a;
+  --text: #f5f3ef; --txt: #f5f3ef; --secondary: #dedbd5;
+  --cal-muted: #bcb8af; --key: #191919; --key-hi: #30291d;
+  --gold: #cda85f; --gold-ink: #e2c788; --cal-accent: #e2c788;
+  --op: #574527; --op-hi: #755d32; --eq: #cda85f; --eq-hi: #e2c788;
+  --accent: #17120a; --danger: #e2c788;
+}
+.mode.active, .op, .sha-btn { color: #fff; }
+.op.active, .eq { color: #17120a; }
+button:focus-visible { outline: 2px solid #e2c788; outline-offset: 2px; }
+html, body, body.starry { background: transparent !important; }
+html, body { height: auto; min-height: 0; }
+.calc-stage { padding: 0; justify-content: flex-start; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class=&quot;starry&quot;&gt;
+
+  &lt;main class=&quot;calc-stage&quot;&gt;
+  &lt;h1 class=&quot;vh&quot;&gt;52 Calculator&lt;/h1&gt;
+  &lt;div class=&quot;calc&quot;&gt;
+    &lt;div class=&quot;modebar&quot;&gt;
+      &lt;button class=&quot;mode&quot; data-base=&quot;2&quot;&gt;BIN&lt;/button&gt;
+      &lt;button class=&quot;mode&quot; data-base=&quot;10&quot;&gt;DEC&lt;/button&gt;
+      &lt;button class=&quot;mode active&quot; data-base=&quot;12&quot;&gt;DOZ&lt;/button&gt;
+      &lt;button class=&quot;mode&quot; data-base=&quot;16&quot;&gt;HEX&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;button type=&quot;button&quot; id=&quot;mode52&quot; class=&quot;mode&quot; aria-pressed=&quot;false&quot;&gt;52 mode&lt;/button&gt;
+    &lt;div class=&quot;screen&quot;&gt;
+      &lt;div class=&quot;expr&quot; id=&quot;expr&quot;&gt;&amp;nbsp;&lt;/div&gt;
+      &lt;div class=&quot;main&quot; id=&quot;calcMain&quot; aria-live=&quot;polite&quot; aria-atomic=&quot;true&quot;&gt;&lt;span id=&quot;calcMainText&quot;&gt;0&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;conv-panel&quot;&gt;
+      &lt;div class=&quot;calc-card-result&quot; id=&quot;calcCardResult&quot; hidden&gt;&lt;/div&gt;
+      &lt;div class=&quot;conv&quot; id=&quot;conv&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;conv2&quot; id=&quot;conv2&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;conv2&quot; id=&quot;conv3&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;calc-card-toggle&quot; id=&quot;calcCardToggle&quot; aria-pressed=&quot;false&quot; aria-controls=&quot;calcCardInput&quot;&gt;Card mode: Off&lt;/button&gt;
+    &lt;div class=&quot;grid&quot;&gt;
+      &lt;div class=&quot;calc-extra&quot; aria-label=&quot;Additional base digits&quot;&gt;
+        &lt;button class=&quot;digit-hex&quot; data-d=&quot;C&quot;&gt;C&lt;/button&gt;
+        &lt;button class=&quot;digit-hex&quot; data-d=&quot;D&quot;&gt;D&lt;/button&gt;
+        &lt;button class=&quot;digit-hex&quot; data-d=&quot;E&quot;&gt;E&lt;/button&gt;
+        &lt;button class=&quot;digit-hex&quot; data-d=&quot;F&quot;&gt;F&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;calc-keypad&quot;&gt;
+        &lt;button class=&quot;fn&quot; data-act=&quot;clear&quot; aria-label=&quot;Clear all&quot;&gt;AC&lt;/button&gt;
+        &lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;button class=&quot;fn&quot; data-act=&quot;back&quot; aria-label=&quot;Backspace&quot;&gt;⌫&lt;/button&gt;
+        &lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;button class=&quot;digit-ab&quot; data-d=&quot;A&quot;&gt;A&lt;/button&gt;
+        &lt;button class=&quot;digit-ab&quot; data-d=&quot;B&quot;&gt;B&lt;/button&gt;
+        &lt;button data-d=&quot;0&quot;&gt;0&lt;/button&gt;
+        &lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;button data-d=&quot;7&quot;&gt;7&lt;/button&gt;
+        &lt;button data-d=&quot;8&quot;&gt;8&lt;/button&gt;
+        &lt;button data-d=&quot;9&quot;&gt;9&lt;/button&gt;
+        &lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;button data-d=&quot;4&quot;&gt;4&lt;/button&gt;
+        &lt;button data-d=&quot;5&quot;&gt;5&lt;/button&gt;
+        &lt;button data-d=&quot;6&quot;&gt;6&lt;/button&gt;
+        &lt;button class=&quot;op&quot; data-op=&quot;sub&quot; aria-label=&quot;Subtract&quot;&gt;−&lt;/button&gt;
+        &lt;button data-d=&quot;1&quot;&gt;1&lt;/button&gt;
+        &lt;button data-d=&quot;2&quot;&gt;2&lt;/button&gt;
+        &lt;button data-d=&quot;3&quot;&gt;3&lt;/button&gt;
+        &lt;button class=&quot;op&quot; data-op=&quot;add&quot; aria-label=&quot;Add&quot;&gt;+&lt;/button&gt;
+        &lt;button class=&quot;eq&quot; data-act=&quot;equals&quot; aria-label=&quot;Equals&quot;&gt;=&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;calc-card-input&quot; id=&quot;calcCardInput&quot; hidden&gt;
+      &lt;div class=&quot;vh&quot; id=&quot;calcCardStatus&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;calc-keypad&quot;&gt;
+        &lt;button class=&quot;fn&quot; data-card-act=&quot;clear&quot;&gt;AC&lt;/button&gt;
+        &lt;button data-rank=&quot;13&quot; aria-pressed=&quot;false&quot;&gt;K&lt;/button&gt;
+        &lt;button class=&quot;fn&quot; data-card-act=&quot;back&quot; aria-label=&quot;Backspace&quot;&gt;⌫&lt;/button&gt;
+        &lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;button data-rank=&quot;10&quot; aria-pressed=&quot;false&quot;&gt;10&lt;/button&gt;
+        &lt;button data-rank=&quot;11&quot; aria-pressed=&quot;false&quot;&gt;J&lt;/button&gt;
+        &lt;button data-rank=&quot;12&quot; aria-pressed=&quot;false&quot;&gt;Q&lt;/button&gt;
+        &lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;button data-rank=&quot;7&quot; aria-pressed=&quot;false&quot;&gt;7&lt;/button&gt;
+        &lt;button data-rank=&quot;8&quot; aria-pressed=&quot;false&quot;&gt;8&lt;/button&gt;
+        &lt;button data-rank=&quot;9&quot; aria-pressed=&quot;false&quot;&gt;9&lt;/button&gt;
+        &lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;button data-rank=&quot;4&quot; aria-pressed=&quot;false&quot;&gt;4&lt;/button&gt;
+        &lt;button data-rank=&quot;5&quot; aria-pressed=&quot;false&quot;&gt;5&lt;/button&gt;
+        &lt;button data-rank=&quot;6&quot; aria-pressed=&quot;false&quot;&gt;6&lt;/button&gt;
+        &lt;button class=&quot;op&quot; data-card-op=&quot;sub&quot; aria-label=&quot;Subtract&quot;&gt;−&lt;/button&gt;
+        &lt;button data-rank=&quot;1&quot; aria-pressed=&quot;false&quot;&gt;A&lt;/button&gt;
+        &lt;button data-rank=&quot;2&quot; aria-pressed=&quot;false&quot;&gt;2&lt;/button&gt;
+        &lt;button data-rank=&quot;3&quot; aria-pressed=&quot;false&quot;&gt;3&lt;/button&gt;
+        &lt;button class=&quot;op&quot; data-card-op=&quot;add&quot; aria-label=&quot;Add&quot;&gt;+&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;calc-suit-row&quot; role=&quot;group&quot; aria-label=&quot;Card suit&quot;&gt;
+        &lt;button data-suit=&quot;0&quot; aria-label=&quot;Hearts&quot; aria-pressed=&quot;false&quot;&gt;♥&lt;/button&gt;
+        &lt;button data-suit=&quot;1&quot; aria-label=&quot;Clubs&quot; aria-pressed=&quot;false&quot;&gt;♣&lt;/button&gt;
+        &lt;button data-suit=&quot;2&quot; aria-label=&quot;Diamonds&quot; aria-pressed=&quot;false&quot;&gt;♦&lt;/button&gt;
+        &lt;button data-suit=&quot;3&quot; aria-label=&quot;Spades&quot; aria-pressed=&quot;false&quot;&gt;♠&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;button class=&quot;eq&quot; data-card-act=&quot;equals&quot; aria-label=&quot;Equals&quot;&gt;=&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;/main&gt;
+
+&lt;script&gt;
+/*
+ * dozenal.js — exact base-12 (dozenal) arithmetic core
+ *
+ * Every value is stored as an exact rational: a BigInt numerator over a
+ * BigInt denominator. This means no floating-point error, ever. Parsing,
+ * the four operations, and conversion between bases are all exact; the only
+ * place approximation can occur is when an endlessly-repeating expansion is
+ * printed, and even then we detect the repeat and mark it rather than guess.
+ *
+ * Digit symbols: 0-9, then A = ten, B = eleven (case-insensitive on input).
+ */
+(function (root) {
+  &quot;use strict&quot;;
+
+  var DIGITS = &quot;0123456789ABCDEF&quot;; // index = digit value, up to base 16
+
+  // ---- rational helpers ---------------------------------------------------
+
+  function absBig(x) { return x &lt; 0n ? -x : x; }
+
+  function gcd(a, b) {
+    a = absBig(a); b = absBig(b);
+    while (b) { var t = a % b; a = b; b = t; }
+    return a;
+  }
+
+  // Build a normalized rational: denominator &gt; 0, gcd(n,d) = 1.
+  function rat(n, d) {
+    if (d === 0n) throw new Error(&quot;Division by zero&quot;);
+    if (d &lt; 0n) { n = -n; d = -d; }
+    var g = gcd(n, d) || 1n;
+    return { n: n / g, d: d / g };
+  }
+
+  // ---- parsing ------------------------------------------------------------
+
+  function digitValue(ch) {
+    var v = DIGITS.indexOf(ch.toUpperCase());
+    return v;
+  }
+
+  // Parse a string in the given base (default 12) into a rational.
+  function parse(str, base) {
+    base = BigInt(base || 12);
+    if (typeof str !== &quot;string&quot;) throw new Error(&quot;parse expects a string&quot;);
+    str = str.trim();
+    if (str === &quot;&quot; || str === &quot;-&quot; || str === &quot;+&quot; || str === &quot;.&quot;)
+      throw new Error(&quot;Empty number&quot;);
+
+    var sign = 1n;
+    if (str[0] === &quot;-&quot;) { sign = -1n; str = str.slice(1); }
+    else if (str[0] === &quot;+&quot;) { str = str.slice(1); }
+
+    var parts = str.split(&quot;.&quot;);
+    if (parts.length &gt; 2) throw new Error(&quot;Too many radix points: &quot; + str);
+    var intPart = parts[0] || &quot;&quot;;
+    var fracPart = parts.length === 2 ? parts[1] : &quot;&quot;;
+
+    if (intPart === &quot;&quot; &amp;&amp; fracPart === &quot;&quot;) throw new Error(&quot;Empty number&quot;);
+
+    var num = 0n;
+    var i, dv;
+    for (i = 0; i &lt; intPart.length; i++) {
+      dv = digitValue(intPart[i]);
+      if (dv &lt; 0 || BigInt(dv) &gt;= base)
+        throw new Error(&quot;Invalid digit &#x27;&quot; + intPart[i] + &quot;&#x27; for base &quot; + base);
+      num = num * base + BigInt(dv);
+    }
+
+    var den = 1n;
+    for (i = 0; i &lt; fracPart.length; i++) {
+      dv = digitValue(fracPart[i]);
+      if (dv &lt; 0 || BigInt(dv) &gt;= base)
+        throw new Error(&quot;Invalid digit &#x27;&quot; + fracPart[i] + &quot;&#x27; for base &quot; + base);
+      num = num * base + BigInt(dv);
+      den = den * base;
+    }
+
+    return rat(sign * num, den);
+  }
+
+  // ---- arithmetic ---------------------------------------------------------
+
+  function add(a, b) { return rat(a.n * b.d + b.n * a.d, a.d * b.d); }
+  function sub(a, b) { return rat(a.n * b.d - b.n * a.d, a.d * b.d); }
+  function mul(a, b) { return rat(a.n * b.n, a.d * b.d); }
+  function div(a, b) {
+    if (b.n === 0n) throw new Error(&quot;Division by zero&quot;);
+    return rat(a.n * b.d, a.d * b.n);
+  }
+
+  function isZero(a) { return a.n === 0n; }
+  function equals(a, b) { return a.n === b.n &amp;&amp; a.d === b.d; }
+  function negate(a) { return { n: -a.n, d: a.d }; }
+
+  // ---- formatting ---------------------------------------------------------
+
+  // Convert a non-negative BigInt integer to a string in the given base.
+  function intToBase(q, base) {
+    if (q === 0n) return &quot;0&quot;;
+    var s = &quot;&quot;;
+    while (q &gt; 0n) { s = DIGITS[Number(q % base)] + s; q = q / base; }
+    return s;
+  }
+
+  /*
+   * Render a rational in the given base.
+   *   maxFracDigits — hard cap on fractional digits when an expansion neither
+   *                   terminates nor repeats within the cap.
+   * Repeating expansions are detected exactly and wrapped in parentheses,
+   * e.g. 1/5 in base 12 -&gt; &quot;0.(2497)&quot;.
+   */
+  function format(a, base, maxFracDigits) {
+    base = BigInt(base || 12);
+    if (maxFracDigits == null) maxFracDigits = 24;
+
+    var sign = a.n &lt; 0n ? &quot;-&quot; : &quot;&quot;;
+    var n = absBig(a.n);
+    var d = a.d;
+
+    var intPart = n / d;
+    var rem = n % d;
+
+    var intStr = intToBase(intPart, base);
+    if (rem === 0n) return sign + intStr;
+
+    // Long division of rem/d in the target base, tracking remainders so a
+    // repeating cycle can be identified the moment a remainder recurs.
+    var seen = new Map();
+    var digits = [];
+    var repeatStart = -1;
+    var truncated = false;
+
+    while (rem !== 0n) {
+      if (seen.has(rem.toString())) { repeatStart = seen.get(rem.toString()); break; }
+      if (digits.length &gt;= maxFracDigits) { truncated = true; break; }
+      seen.set(rem.toString(), digits.length);
+      rem = rem * base;
+      digits.push(DIGITS[Number(rem / d)]);
+      rem = rem % d;
+    }
+
+    var fracStr;
+    if (repeatStart &gt;= 0) {
+      var nonRep = digits.slice(0, repeatStart).join(&quot;&quot;);
+      var rep = digits.slice(repeatStart).join(&quot;&quot;);
+      fracStr = nonRep + &quot;(&quot; + rep + &quot;)&quot;;
+    } else {
+      fracStr = digits.join(&quot;&quot;) + (truncated ? &quot;…&quot; : &quot;&quot;);
+    }
+
+    return sign + intStr + &quot;.&quot; + fracStr;
+  }
+
+  function toBase12(a, maxFracDigits) { return format(a, 12, maxFracDigits); }
+  function toBase10(a, maxFracDigits) { return format(a, 10, maxFracDigits); }
+
+  var api = {
+    rat: rat,
+    parse: parse,
+    add: add, sub: sub, mul: mul, div: div,
+    negate: negate, isZero: isZero, equals: equals,
+    format: format, toBase12: toBase12, toBase10: toBase10,
+    DIGITS: DIGITS
+  };
+
+  if (typeof module !== &quot;undefined&quot; &amp;&amp; module.exports) module.exports = api;
+  else root.Dozenal = api;
+})(typeof self !== &quot;undefined&quot; ? self : this);
+
+
+&lt;/script&gt;
+&lt;script&gt;
+(function () {
+  &quot;use strict&quot;;
+  var D = window.Dozenal;
+  var OPS = { add: D.add, sub: D.sub, mul: D.mul, div: D.div };
+  var SYM = { add: &quot;+&quot;, sub: &quot;−&quot;, mul: &quot;×&quot;, div: &quot;÷&quot; };
+
+  var base = 12;
+  var mode52 = true;
+  function wrap52(r) { var v = ((r.n - 1n) % 52n + 52n) % 52n + 1n; return { n: v, d: 1n }; }
+  var entry = &quot;0&quot;;
+  var acc = null;
+  var pending = null;
+  var expression = [];
+  var cardMode = false;
+  var selectedRank = null, selectedSuit = null;
+  var entryExact = null;
+  var waiting = false;
+  var errored = false;
+
+  var mainEl     = document.getElementById(&quot;calcMain&quot;);
+  var mainTextEl = document.getElementById(&quot;calcMainText&quot;);
+  var exprEl  = document.getElementById(&quot;expr&quot;);
+  var convEl  = document.getElementById(&quot;conv&quot;);
+  var conv2El = document.getElementById(&quot;conv2&quot;);
+  var conv3El = document.getElementById(&quot;conv3&quot;);
+  var cardResultEl = document.getElementById(&quot;calcCardResult&quot;);
+
+  // Which digits are valid in each base
+  var VALID = { 2: &quot;01&quot;, 10: &quot;0123456789&quot;, 12: &quot;0123456789AB&quot;, 16: &quot;0123456789ABCDEF&quot; };
+  // Conversion labels
+  var LABELS = { 2: &quot;bin&quot;, 10: &quot;dec&quot;, 12: &quot;doz&quot;, 16: &quot;hex&quot; };
+  // For each base, the other 3 bases to show as conversions
+  var CONV_BASES = { 2: [10, 12, 16], 10: [2, 12, 16], 12: [2, 10, 16], 16: [2, 10, 12] };
+
+  function fmt(r, b) { var v = D.format(r, b || base); return mode52 &amp;&amp; (b || base) === 12 ? v.replace(/A/g, &#x27;X&#x27;).replace(/B/g, &#x27;L&#x27;) : v; }
+
+  // Scale the main display down until the value fits inside the fixed two-row
+  // box (wrapping as needed), so the screen keeps a constant height no matter
+  // how long the value gets — a full 128-bit binary number still fits.
+  function fitMain() {
+    mainEl.style.fontSize = &quot;&quot;;                 // back to the CSS (responsive) size
+    var size = parseFloat(getComputedStyle(mainEl).fontSize);
+    var min = 11;
+    while (mainTextEl.scrollHeight &gt; mainEl.clientHeight &amp;&amp; size &gt; min) {
+      size -= 1;
+      mainEl.style.fontSize = size + &quot;px&quot;;
+    }
+  }
+
+  function shownRat() {
+    if (waiting &amp;&amp; acc !== null) return acc;
+    try { return entryExact || D.parse(entry, base); } catch (e) { return null; }
+  }
+
+  function render() {
+    if (errored) {
+      mainTextEl.textContent = &quot;Error&quot;;
+      mainEl.classList.add(&quot;error&quot;);
+      fitMain();
+      exprEl.innerHTML = &quot;&amp;nbsp;&quot;;
+      convEl.innerHTML = &quot;&quot;;
+      conv2El.innerHTML = &quot;&quot;;
+      conv3El.innerHTML = &quot;&quot;;
+      cardResultEl.hidden = true;
+      highlightOp();
+      return;
+    }
+    mainEl.classList.remove(&quot;error&quot;);
+    mainTextEl.textContent = (waiting &amp;&amp; acc !== null) ? fmt(acc) : (mode52 &amp;&amp; base === 12 ? entry.replace(/A/g, &#x27;X&#x27;).replace(/B/g, &#x27;L&#x27;) : entry);
+    fitMain();
+
+    var currentEntry = mode52 &amp;&amp; base === 12 ? entry.replace(/A/g, &#x27;X&#x27;).replace(/B/g, &#x27;L&#x27;) : entry;
+    var shownExpression = expression.slice();
+    if (pending !== null &amp;&amp; !waiting) shownExpression.push(currentEntry);
+    exprEl.textContent = shownExpression.length ? shownExpression.join(&quot; &quot;) : &quot; &quot;;
+    exprEl.scrollLeft = exprEl.scrollWidth;
+
+    var r = shownRat();
+    var cardValue = r &amp;&amp; r.d === 1n &amp;&amp; r.n &gt;= 1n &amp;&amp; r.n &lt;= 52n ? Number(r.n) : 0;
+    cardResultEl.hidden = !cardValue;
+    if (cardValue) {
+      var resultRank = [&quot;A&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;J&quot;, &quot;Q&quot;, &quot;K&quot;][(cardValue - 1) % 13];
+      var resultSuit = [&quot;♥&quot;, &quot;♣&quot;, &quot;♦&quot;, &quot;♠&quot;][Math.floor((cardValue - 1) / 13)];
+      cardResultEl.textContent = resultRank + resultSuit;
+    }
+    var cb = mode52 ? [base === 10 ? 12 : 10] : CONV_BASES[base];
+    if (r) {
+      try {
+        convEl.innerHTML  = &#x27;&lt;span&gt;= &lt;/span&gt;&#x27; + fmt(r, cb[0]) + &#x27; &lt;span&gt;(&#x27; + LABELS[cb[0]] + &#x27;)&lt;/span&gt;&#x27;;
+        conv2El.innerHTML = mode52 ? &#x27;&#x27; : &#x27;&lt;span&gt;= &lt;/span&gt;&#x27; + fmt(r, cb[1]) + &#x27; &lt;span&gt;(&#x27; + LABELS[cb[1]] + &#x27;)&lt;/span&gt;&#x27;;
+        conv3El.innerHTML = mode52 ? &#x27;&#x27; : &#x27;&lt;span&gt;= &lt;/span&gt;&#x27; + fmt(r, cb[2]) + &#x27; &lt;span&gt;(&#x27; + LABELS[cb[2]] + &#x27;)&lt;/span&gt;&#x27;;
+      } catch(e) {
+        convEl.innerHTML = conv2El.innerHTML = conv3El.innerHTML = &quot;&quot;;
+      }
+    } else {
+      convEl.innerHTML = conv2El.innerHTML = conv3El.innerHTML = &quot;&quot;;
+    }
+    highlightOp();
+  }
+
+  function highlightOp() {
+    document.querySelectorAll(&quot;.op&quot;).forEach(function (b) {
+      b.classList.toggle(&quot;active&quot;, !errored &amp;&amp; pending &amp;&amp; b.getAttribute(&quot;data-op&quot;) === pending &amp;&amp; waiting);
+    });
+  }
+
+  function clearAll() {
+    entry = &quot;0&quot;; acc = null; pending = null; expression = []; entryExact = null; waiting = false; errored = false; render();
+  }
+
+  function digit(d) {
+    // &quot;.&quot; is always allowed (the radix point); other chars must be valid digits
+    // in the current base.
+    if (mode52 &amp;&amp; d === &quot;.&quot;) return;
+    if (d !== &quot;.&quot; &amp;&amp; VALID[base].indexOf(d.toUpperCase()) &lt; 0) return;
+    if (errored) clearAll();
+    if (entryExact &amp;&amp; !waiting) { entry = &quot;0&quot;; entryExact = null; }
+    if (waiting) {
+      entry = (d === &quot;.&quot;) ? &quot;0.&quot; : d;
+      waiting = false;
+      if (pending === null) { acc = null; expression = []; }
+    } else if (d === &quot;.&quot;) {
+      if (entry.indexOf(&quot;.&quot;) &lt; 0) entry += &quot;.&quot;;
+    } else if (entry === &quot;0&quot;) {
+      entry = d.toUpperCase();
+    } else if (entry.replace(&#x27;-&#x27;, &#x27;&#x27;).length &lt; 36) {
+      entry += d.toUpperCase();
+    }
+    render();
+  }
+
+  function op(o) {
+    if (errored || (mode52 &amp;&amp; o !== &#x27;add&#x27; &amp;&amp; o !== &#x27;sub&#x27;)) return;
+    try {
+      if (!waiting) {
+        if (pending === null) expression = [mode52 &amp;&amp; base === 12 ? entry.replace(/A/g, &#x27;X&#x27;).replace(/B/g, &#x27;L&#x27;) : entry];
+        else expression.push(mode52 &amp;&amp; base === 12 ? entry.replace(/A/g, &#x27;X&#x27;).replace(/B/g, &#x27;L&#x27;) : entry);
+        acc = (pending === null) ? (entryExact || D.parse(entry, base))
+                                 : OPS[pending](acc, entryExact || D.parse(entry, base));
+        entryExact = null;
+      } else if (pending !== null) {
+        expression.pop();
+      } else {
+        expression = [fmt(acc)];
+      }
+      if (mode52 &amp;&amp; pending !== null &amp;&amp; !waiting) acc = wrap52(acc);
+      expression.push(SYM[o]);
+      pending = o;
+      waiting = true;
+      render();
+    } catch (e) { errored = true; render(); }
+  }
+
+  function equals() {
+    if (errored || pending === null) return;
+    try {
+      var operand = waiting ? acc : (entryExact || D.parse(entry, base));
+      entryExact = null;
+      expression.push(waiting ? fmt(operand) : (mode52 &amp;&amp; base === 12 ? entry.replace(/A/g, &#x27;X&#x27;).replace(/B/g, &#x27;L&#x27;) : entry));
+      expression.push(&quot;=&quot;);
+      acc = OPS[pending](acc, operand);
+      if (mode52) acc = wrap52(acc);
+      pending = null;
+      waiting = true;
+      render();
+    } catch (e) { errored = true; render(); }
+  }
+
+  function updateButtons() {
+    var valid = VALID[base];
+    document.body.classList.toggle(&#x27;mode-52&#x27;, mode52);
+    document.getElementById(&#x27;mode52&#x27;).setAttribute(&#x27;aria-pressed&#x27;, String(mode52));
+    document.querySelectorAll(&#x27;[data-base=&quot;2&quot;], [data-base=&quot;16&quot;], .digit-hex&#x27;).forEach(function (el) { el.hidden = mode52; });
+    document.querySelectorAll(&#x27;[data-op=&quot;mul&quot;], [data-op=&quot;div&quot;], [data-act=&quot;sign&quot;], [data-card-op=&quot;mul&quot;], [data-card-op=&quot;div&quot;], [data-card-act=&quot;sign&quot;]&#x27;).forEach(function (el) { el.disabled = mode52; });
+    // digits 0-9
+    document.querySelectorAll(&quot;[data-d]&quot;).forEach(function (btn) {
+      var d = btn.dataset.d;
+      if (d === &quot;.&quot;) { btn.disabled = mode52; return; }
+      btn.disabled = valid.indexOf(d.toUpperCase()) &lt; 0;
+    });
+    // C-F stay visible in every mode (disabled outside HEX by the loop above),
+    // so the keypad height is fixed and never shifts when switching base.
+    // disable A-B when not valid (keep visible so layout stays fixed)
+    document.querySelectorAll(&quot;.digit-ab&quot;).forEach(function (btn) {
+      btn.disabled = (base === 2 || base === 10);
+    });
+    document.querySelector(&#x27;[data-d=&quot;A&quot;]&#x27;).textContent = mode52 ? &#x27;X&#x27; : &#x27;A&#x27;;
+    document.querySelector(&#x27;[data-d=&quot;B&quot;]&#x27;).textContent = mode52 ? &#x27;L&#x27; : &#x27;B&#x27;;
+    // mode tabs
+    document.querySelectorAll(&quot;.mode&quot;).forEach(function (m) {
+      var selected = +m.getAttribute(&quot;data-base&quot;) === base;
+      m.classList.toggle(&quot;active&quot;, selected);
+      if (m.hasAttribute(&quot;data-base&quot;)) m.setAttribute(&quot;aria-pressed&quot;, String(selected));
+    });
+  }
+
+  function setBase(b) {
+    if (b === base) return;
+    var oldBase = base;
+    var current = errored ? null : shownRat();
+    var convertedExpression = expression.map(function (token) {
+      if (token === &quot;+&quot; || token === &quot;−&quot; || token === &quot;×&quot; || token === &quot;÷&quot; || token === &quot;=&quot;) return token;
+      try {
+        var normalized = mode52 &amp;&amp; oldBase === 12 ? token.replace(/X/g, &quot;A&quot;).replace(/L/g, &quot;B&quot;) : token;
+        var value = D.format(D.parse(normalized, oldBase), b);
+        return mode52 &amp;&amp; b === 12 ? value.replace(/A/g, &quot;X&quot;).replace(/B/g, &quot;L&quot;) : value;
+      } catch (_) { return token; }
+    });
+    base = b;
+    expression = convertedExpression;
+    errored = false;
+    if (current !== null &amp;&amp; !waiting) {
+      var converted = D.format(current, b);
+      entry = converted;
+      entryExact = converted.indexOf(&#x27;(&#x27;) &gt;= 0 ? current : null;
+    }
+    updateButtons();
+    render();
+  }
+
+  function sign() {
+    if (errored) return;
+    if (waiting &amp;&amp; acc !== null) {
+      acc = D.negate(acc);
+    } else if (entryExact) {
+      entryExact = D.negate(entryExact);
+      entry = fmt(entryExact);
+    } else if (entry !== &quot;0&quot;) {
+      entry = entry[0] === &quot;-&quot; ? entry.slice(1) : &quot;-&quot; + entry;
+    }
+    render();
+  }
+
+  function back() {
+    if (errored || waiting) return;
+    if (entryExact) { entryExact = null; entry = &quot;0&quot;; render(); return; }
+    if (entry.length &lt;= 1 || (entry.length === 2 &amp;&amp; entry[0] === &quot;-&quot;)) entry = &quot;0&quot;;
+    else entry = entry.slice(0, -1);
+    render();
+  }
+
+  // A rank and suit together enter the card's solar value.
+  var cardInput = document.getElementById(&quot;calcCardInput&quot;);
+  var cardToggle = document.getElementById(&quot;calcCardToggle&quot;);
+  var cardStatus = document.getElementById(&quot;calcCardStatus&quot;);
+  var numericGrid = document.querySelector(&quot;.grid&quot;);
+  function updateCardSelection() {
+    cardInput.querySelectorAll(&quot;[data-rank]&quot;).forEach(function (button) { button.setAttribute(&quot;aria-pressed&quot;, String(Number(button.dataset.rank) === selectedRank)); });
+    cardInput.querySelectorAll(&quot;[data-suit]&quot;).forEach(function (button) { button.setAttribute(&quot;aria-pressed&quot;, String(Number(button.dataset.suit) === selectedSuit)); });
+    cardStatus.textContent = selectedRank === null ? (selectedSuit === null ? &quot;&quot; : &quot;Choose a rank&quot;) : &quot;Choose a suit&quot;;
+  }
+  function commitSelectedCard() {
+    if (selectedRank === null || selectedSuit === null) { updateCardSelection(); return; }
+    var value = selectedSuit * 13 + selectedRank;
+    if (errored) clearAll();
+    if (pending === null &amp;&amp; (waiting || entry !== &quot;0&quot;)) op(&quot;add&quot;);
+    else if (pending !== null &amp;&amp; !waiting) op(&quot;add&quot;);
+    entry = D.format({ n: BigInt(value), d: 1n }, base);
+    entryExact = null; waiting = false;
+    selectedRank = null; selectedSuit = null;
+    updateCardSelection(); render();
+  }
+  cardToggle.addEventListener(&quot;click&quot;, function () {
+    cardMode = !cardMode;
+    selectedRank = null; selectedSuit = null; updateCardSelection();
+    numericGrid.hidden = cardMode; cardInput.hidden = !cardMode;
+    cardToggle.setAttribute(&quot;aria-pressed&quot;, String(cardMode));
+    cardToggle.textContent = cardMode ? &quot;Card mode: On&quot; : &quot;Card mode: Off&quot;;
+    updateButtons();
+    window.parent.postMessage({ type: &quot;calculator-resize&quot; }, &quot;*&quot;);
+  });
+  cardInput.addEventListener(&quot;click&quot;, function (event) {
+    var button = event.target.closest(&quot;button&quot;);
+    if (!button || button.disabled) return;
+    if (button.dataset.rank) { selectedRank = Number(button.dataset.rank); commitSelectedCard(); }
+    else if (button.dataset.suit !== undefined) { selectedSuit = Number(button.dataset.suit); commitSelectedCard(); }
+    else if (button.dataset.cardOp) { selectedRank = null; selectedSuit = null; updateCardSelection(); op(button.dataset.cardOp); }
+    else if (button.dataset.cardAct) {
+      selectedRank = null; selectedSuit = null; updateCardSelection();
+      if (button.dataset.cardAct === &quot;clear&quot;) clearAll();
+      else if (button.dataset.cardAct === &quot;back&quot;) back();
+      else if (button.dataset.cardAct === &quot;sign&quot;) sign();
+      else if (button.dataset.cardAct === &quot;equals&quot;) equals();
+    }
+  });
+
+  // ---- wire up buttons ----
+  document.querySelector(&quot;.grid&quot;).addEventListener(&quot;click&quot;, function (e) {
+    var b = e.target.closest(&quot;button&quot;);
+    if (!b) return;
+    if (b.dataset.d != null) digit(b.dataset.d);
+    else if (b.dataset.op) op(b.dataset.op);
+    else if (b.dataset.act === &quot;equals&quot;) equals();
+    else if (b.dataset.act === &quot;clear&quot;) clearAll();
+    else if (b.dataset.act === &quot;back&quot;) back();
+    else if (b.dataset.act === &quot;sign&quot;) sign();
+  });
+
+  document.getElementById(&#x27;mode52&#x27;).addEventListener(&#x27;click&#x27;, function () {
+    mode52 = !mode52;
+    if (mode52 &amp;&amp; base !== 10 &amp;&amp; base !== 12) base = 10;
+    clearAll(); updateButtons(); render();
+  });
+  document.querySelector(&quot;.modebar&quot;).addEventListener(&quot;click&quot;, function (e) {
+    var b = e.target.closest(&quot;.mode&quot;);
+    if (b) setBase(+b.getAttribute(&quot;data-base&quot;));
+  });
+
+  updateButtons();
+  render();
+
+  // ---- keyboard ----
+  document.addEventListener(&quot;keydown&quot;, function (e) {
+    // Don&#x27;t hijack typing in form fields (e.g. the SHA-256 input)
+    var t = e.target;
+    if (t &amp;&amp; (t.tagName === &quot;INPUT&quot; || t.tagName === &quot;TEXTAREA&quot; || t.isContentEditable)) return;
+    var k = e.key;
+    if (/^[0-9]$/.test(k)) digit(k);
+    else if (mode52 &amp;&amp; (k === &quot;x&quot; || k === &quot;X&quot;)) digit(&quot;A&quot;);
+    else if (mode52 &amp;&amp; (k === &quot;l&quot; || k === &quot;L&quot;)) digit(&quot;B&quot;);
+    else if (k === &quot;a&quot; || k === &quot;A&quot;) digit(&quot;A&quot;);
+    else if (k === &quot;b&quot; || k === &quot;B&quot;) digit(&quot;B&quot;);
+    else if (k === &quot;c&quot; || k === &quot;C&quot;) digit(&quot;C&quot;);
+    else if (k === &quot;d&quot; || k === &quot;D&quot;) digit(&quot;D&quot;);
+    else if (k === &quot;e&quot; || k === &quot;E&quot;) digit(&quot;E&quot;);
+    else if (k === &quot;f&quot; || k === &quot;F&quot;) digit(&quot;F&quot;);
+    else if (k === &quot;.&quot;) digit(&quot;.&quot;);
+    else if (k === &quot;+&quot;) op(&quot;add&quot;);
+    else if (k === &quot;-&quot;) op(&quot;sub&quot;);
+    else if (k === &quot;*&quot;) op(&quot;mul&quot;);
+    else if (k === &quot;/&quot;) { e.preventDefault(); op(&quot;div&quot;); }
+    else if (k === &quot;Enter&quot; || k === &quot;=&quot;) { e.preventDefault(); equals(); }
+    else if (k === &quot;Backspace&quot;) { e.preventDefault(); back(); }
+    else if (k === &quot;Escape&quot;) clearAll();
+    else return;
+  });
+
+  render();
+
+  // Re-fit the display when the viewport changes size (e.g. rotation, or the
+  // mobile breakpoint switching the base font) and once the web font loads.
+  window.addEventListener(&quot;resize&quot;, fitMain);
+  if (document.fonts &amp;&amp; document.fonts.ready) document.fonts.ready.then(fitMain);
+
+  // Expose the current display value as a hex byte-string (whole-number part,
+  // even length) so the SHA-256 tool can pull it in. Returns null when there
+  // is no usable value (error state or unparseable entry).
+  window.CalcBridge = {
+    hexBytes: function () {
+      var r = errored ? null : shownRat();
+      if (r === null) return null;
+      var hex = D.format(r, 16).replace(&quot;-&quot;, &quot;&quot;).split(&quot;.&quot;)[0]; // integer part, no sign
+      if (!/^[0-9A-Fa-f]+$/.test(hex)) return null;
+      if (hex.length % 2) hex = &quot;0&quot; + hex;                       // pad to whole bytes
+      return hex.toLowerCase();
+    }
+  };
+})();
+
+
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+" id="finderCalculatorFrame" style="display:block; width:100%; height:520px; border:0; background:transparent;"></iframe></section>
+            <div id="settingsInfoPanel" class="site-info-content" role="tabpanel" aria-labelledby="settingsInfoTab" tabindex="0" hidden>
+      <section aria-labelledby="siteInfoLegalHeading">
+        <h3 id="siteInfoLegalHeading">Legal</h3>
+        <section><h4>Code</h4><p>The original source code is released under the MIT License. Creative writing and original artwork are licensed separately below.</p><details class="site-info-license"><summary>Read the MIT License</summary><p>Copyright (c) 2026 mysticscards.space</p><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p></details></section>
+        <section><h4>Creative content</h4><p>The original cardology readings and “Quinta Essentia” Joker artwork are licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>. You may share and adapt them for noncommercial use with attribution to <a href="https://mysticscards.space/" target="_blank" rel="noopener">mysticscards.space</a>, a link to the license, and an indication of changes. This license does not cover the source code or third-party material.</p></section>
+        <section><h4>Privacy</h4><p>Saved birthday contacts are stored in this browser. You can export a copy as a file or import one in another browser. Clearing this browser’s site data may remove saved contacts. Export a backup before clearing contacts or moving to another device.</p></section>
+        <section><h4>Disclaimer</h4><p>Cardology readings and solar-time calculations are offered for reflection and entertainment. They are not medical, legal, financial, or mental-health advice.</p></section>
+      </section>
+      <section aria-labelledby="siteInfoCreditsHeading">
+        <h3 id="siteInfoCreditsHeading">Credits</h3>
+        <ul>
+          <li><a href="https://opengameart.org/content/playing-cards-vector-png" target="_blank" rel="noopener">Byron Knoll playing-card artwork</a> — CC0 public-domain dedication.</li>
+          <li><a href="https://tile.loc.gov/storage-services/public/gdcmassbookdig/mystictestbook01rich/mystictestbook01rich.pdf" target="_blank" rel="noopener">Olney H. Richmond, <em>The Mystic Test Book</em></a> (1893) — public-domain source material for the Olney readings.</li>
+          <li><a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noopener">Astronomy Engine by Don Cross</a> (MIT) — used by Solar Time to calculate the Sun’s position.</li>
+          <li><a href="https://www.iana.org/time-zones" target="_blank" rel="noopener">IANA time-zone data</a> — reference-city time zones and coordinates.</li>
+          <li>Inter and Lora fonts — SIL Open Font License 1.1.</li>
+          <li><a href="https://www.geonames.org/">GeoNames</a> city data — CC BY 4.0; selected and repackaged.</li>
+          <li><a href="https://github.com/astronexus/HYG-Database">HYG v4.1, David Nash / Astronexus</a> — CC BY-SA 4.0; filtered and rounded star data.</li>
+        </ul>
+      </section>
+      <section aria-labelledby="siteInfoContactHeading">
+        <h3 id="siteInfoContactHeading">Contact</h3>
+        <p>Questions, feedback, or corrections? Send me an email: <a href="mailto:mysticscards@proton.me">mysticscards@proton.me</a></p>
+      </section>
+            </div>
+            <div class="nc-panel-tabs">
+              <div class="nc-settings-tabs" id="toolsTabs" role="tablist" aria-label="Tools categories">
+                <button type="button" id="settingsCalendarTab" role="tab" aria-selected="true" aria-controls="toolsCalendarPanel">Calendar</button>
+                <button type="button" id="settingsGematriaTab" role="tab" aria-selected="false" tabindex="-1" aria-controls="toolsGematriaPanel">Gematria</button>
+                <button type="button" id="settingsCalculatorTab" role="tab" aria-selected="false" tabindex="-1" aria-controls="finderCalculatorPanel">Calculator</button>
+                <button type="button" id="settingsArrangeTab" role="tab" aria-selected="false" aria-controls="readingSettingsPanel" tabindex="-1">Arrange</button>
+                <button type="button" id="settingsInfoTab" role="tab" aria-selected="false" aria-controls="settingsInfoPanel" tabindex="-1">Site info</button>
+              </div>
+            </div>
+          </section>
+
+          <div class="finder-tray-wrap" id="bdayTrayWrap">
+            <div class="finder-tray-min">
+              <div class="finder-tray bday-tray">
+                <div class="bday-inline-head">
+                  <div class="bday-heading">
+                    <span class="bday-inline-title">Contacts</span>
+                    <span class="bday-count" id="bdayCount">0 contacts</span>
+                  </div>
+                  <div class="bday-head-actions">
+                    <button class="btn btn--gold" id="bdayAddBtn" type="button" aria-expanded="false" aria-controls="birthAddPanel">Add contact</button>
+                <div class="bday-sort" id="bdaySortWrap" hidden>
+                  <label for="bdaySort">Sort by</label>
+                  <select id="bdaySort">
+                    <option value="name">Name (A–Z)</option>
+                    <option value="birthday">Birthday (Jan–Dec)</option>
+                    <option value="card">Sun card</option>
+                    <option value="lifePath">Life path</option>
+                    <option value="animal">Chinese animal</option>
+                    <option value="age">Age (oldest first)</option>
+                  </select>
+                  <button hidden class="bday-tags-toggle" id="bdayTagsToggle" type="button" aria-expanded="false" aria-controls="bdayTagFilters">
+                    <span data-tags-label>Tags</span>
+                    <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="m2.5 4.5 3.5 3 3.5-3" /></svg>
+                  </button>
+                </div>
+                    <button type="button" class="bday-settings-toggle" id="bdaySettingsToggle" aria-label="Contact settings" title="Contact settings" aria-expanded="false" aria-controls="bdaySettingsPanel"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm8 3.5-.1-1.2-2-.6a6.4 6.4 0 0 0-.6-1.5l1-1.8-1.7-1.7-1.8 1a6.4 6.4 0 0 0-1.5-.6l-.6-2h-2.4l-.6 2a6.4 6.4 0 0 0-1.5.6l-1.8-1L4.7 6.9l1 1.8a6.4 6.4 0 0 0-.6 1.5l-2 .6v2.4l2 .6a6.4 6.4 0 0 0 .6 1.5l-1 1.8 1.7 1.7 1.8-1a6.4 6.4 0 0 0 1.5.6l.6 2h2.4l.6-2a6.4 6.4 0 0 0 1.5-.6l1.8 1 1.7-1.7-1-1.8a6.4 6.4 0 0 0 .6-1.5l2-.6L20 12Z"/></svg></button>
+                    <input type="file" id="bdayImportFile" accept="application/json" hidden>
+                  </div>
+                </div>
+                <div class="bday-settings-panel" id="bdaySettingsPanel" hidden>
+                  <fieldset class="bday-display-options">
+                    <legend>Contact details</legend>
+                    <label><input type="checkbox" data-contact-display="lifePath" checked> Life path numbers</label>
+                    <label><input type="checkbox" data-contact-display="zodiac" checked> Vietnamese zodiac</label>
+                    <label><input type="checkbox" data-contact-display="age" checked> Age</label>
+                    <label><input type="checkbox" data-contact-display="earthCard" checked> Earth card</label>
+                  </fieldset>
+                  <div class="bday-settings-actions">
+                    <button class="bday-menu-action" id="bdayImportBtn" type="button">Import contacts</button>
+                    <button class="bday-menu-action" id="bdayExportBtn" type="button">Export contacts</button>
+                    <button class="bday-menu-action" id="bdayClearStorageBtn" type="button">Clear contacts</button>
+                    <button class="bday-menu-action" id="bdayInfoBtn" type="button" aria-expanded="false" aria-controls="bdayNote">Help &amp; storage</button>
+                  </div>
+                </div>
+                <p class="bday-note" id="bdayNote" hidden>Contacts are saved in this browser only. Export to back up or move to another device.</p>
+                <div class="bday-search" id="bdaySearchWrap" hidden>
+                  <input type="search" id="bdaySearch" placeholder="Search Contacts" aria-label="Search Contacts" autocomplete="off">
+                </div>
+                <div class="bday-active-filters" id="bdayActiveFilters" hidden>
+                  <div class="bday-active-filter-list" id="bdayActiveFilterSummary" aria-label="Active contact filters"></div>
+                  <button type="button" class="bday-clear-filters" id="bdayClearFilters">Clear filters</button>
+                </div>
+                <div class="bday-tag-filters" id="bdayTagFilters" hidden role="group" aria-label="Filter contacts by tag"></div>
+                <div class="birth-add-panel" id="birthAddPanel" role="region" aria-labelledby="birthFormHeading" inert>
+                  <h3 class="birth-form-heading" id="birthFormHeading">Add contact</h3>
+                  <div class="birth-add-row">
+                    <label class="ba-detail-field ba-name-field">Name
+                      <input type="text" id="baName" class="ba-field ba-name" autocomplete="off">
+                    </label>
+                    <div class="birth-date-fields" role="group" aria-label="Birthday">
+                      <label class="ba-detail-field">Day<input type="text" id="baDay" class="ba-field ba-num" maxlength="2" inputmode="numeric" placeholder="DD" aria-label="Birthday day"></label>
+                      <label class="ba-detail-field">Month<input type="text" id="baMonth" class="ba-field ba-num" maxlength="2" inputmode="numeric" placeholder="MM" aria-label="Birthday month"></label>
+                      <label class="ba-detail-field">Year<input type="text" id="baYear" class="ba-field ba-year" maxlength="4" inputmode="numeric" placeholder="YYYY" aria-label="Birthday year"></label>
+                    </div>
+                  </div>
+                  <div class="nc-birth-extra">
+                    <label class="ba-detail-field">Birth time (optional)<input type="time" id="baTime" class="ba-field" step="60"></label>
+                    <label class="ba-detail-field">Birthplace (optional)<input type="text" id="baPlace" class="ba-field" list="ncBirthCities" placeholder="Start typing a city" autocomplete="off"></label>
+                  </div>
+                  <p class="ba-solar-preview" id="baSolarPreview" aria-live="polite"></p>
+                  <datalist id="ncBirthCities"></datalist>
+                  <div class="ba-detail-field birth-tags-field" hidden>
+                    <span>Tags</span>
+                    <span class="birth-tag-picker" id="baTagPicker" role="group" aria-label="Contact tags"></span>
+                  </div>
+                  <p class="birth-add-error" id="birthAddError" aria-live="polite"></p>
+                  <div class="birth-form-actions">
+                    <button type="button" class="btn" id="birthAddCancel">Cancel</button>
+                    <button type="button" class="btn btn--gold" id="birthAddSave">Add contact</button>
+                  </div>
+                </div>
+                <div class="bday-list" id="birthPanel"></div>
+                <div class="bday-pager" id="bdayPager" hidden aria-label="Contacts pages"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NC MARKUP: SPREADS -->
+          <div class="quadrations-inline utility-slide-panel" id="qInlinePanel" hidden>
+            <div class="utility-slide-min">
+            <section class="quadrations page-section section-open" id="quadrations" aria-label="Quadrations">
+              <div class="section-bodywrap">
+                <div class="section-bodymin" id="quadrationsBody">
+                  <div class="section-shell">
+                    <div class="spreads-top">
+                      <div class="q-chart-toolbar" aria-label="Spread controls">
+                        <div class="q-chart-age age-controls" role="group" aria-label="Spread age">
+                          <button type="button" class="age-btn" id="ageDown" aria-label="Previous age">−</button>
+                          <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="ageInput" class="age-input" value="0" aria-label="Age (0–89)">
+                          <button type="button" class="age-btn" id="ageUp" aria-label="Next age">+</button>
+                        </div>
+                          <button type="button" class="age-btn q-settings-button" id="qSettingsToggle" aria-label="Quadration settings" title="Quadration settings" aria-expanded="false" aria-controls="qSettingsPanel"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm8 3.5-.1-1.2-2-.6a6.4 6.4 0 0 0-.6-1.5l1-1.8-1.7-1.7-1.8 1a6.4 6.4 0 0 0-1.5-.6l-.6-2h-2.4l-.6 2a6.4 6.4 0 0 0-1.5.6l-1.8-1L4.7 6.9l1 1.8a6.4 6.4 0 0 0-.6 1.5l-2 .6v2.4l2 .6a6.4 6.4 0 0 0 .6 1.5l-1 1.8 1.7 1.7 1.8-1a6.4 6.4 0 0 0 1.5.6l.6 2h2.4l.6-2a6.4 6.4 0 0 0 1.5-.6l1.8 1 1.7-1.7-1-1.8a6.4 6.4 0 0 0 .6-1.5l2-.6L20 12Z"/></svg></button>
+                      </div>
+                      <span class="q-mode-current" id="qModeCurrent" aria-live="polite"></span>
+                    </div>
+                    <div class="section-settings nc-order-controls" id="qSettingsPanel" hidden>
+                    <div class="age-controls-wrap q-controls-menu" id="qControlsMenu">
+                      <fieldset class="q-control-group q-size-stepper">
+                        <legend>Chart size</legend>
+                        <div class="age-controls">
+                          <button type="button" class="age-btn" id="qSizeDown" aria-label="Decrease chart size">−</button>
+                          <label class="q-size-value">
+                            <input type="number" id="qSize" class="age-input" min="60" max="120" step="5" value="100" aria-label="Chart size percent">
+                            <span class="q-size-unit" aria-hidden="true">%</span>
+                          </label>
+                          <button type="button" class="age-btn" id="qSizeUp" aria-label="Increase chart size">+</button>
+                        </div>
+                        <div class="q-size-slider-row">
+                          <span aria-hidden="true">60%</span>
+                          <input type="range" id="qSizeSlider" min="60" max="120" step="5" value="100" aria-label="Chart size slider">
+                          <span aria-hidden="true">120%</span>
+                        </div>
+                      </fieldset>
+                      <fieldset class="q-control-group q-display-group">
+                        <legend>Display</legend>
+                        <div class="q-display-toggles">
+<button type="button" class="q-disp-toggle" data-solar-format-toggle role="switch" aria-checked="false"><span class="q-toggle-icon" aria-hidden="true">12</span><span>Decimal solar values</span><span class="q-switch-track" aria-hidden="true"></span></button>
+<button type="button" class="q-disp-toggle" data-card-solar-toggle role="switch" aria-checked="false"><span class="q-toggle-icon" aria-hidden="true">☀</span><span>Show solar values on cards</span><span class="q-switch-track" aria-hidden="true"></span></button>
+                          <button type="button" class="q-disp-toggle" data-q-mode="solar-card" role="switch" aria-checked="false"><span class="q-toggle-icon" aria-hidden="true">☀</span><span>Large solar values</span><span class="q-switch-track" aria-hidden="true"></span></button>
+                          <button type="button" class="q-disp-toggle" data-q-mode="binary" role="switch" aria-checked="false"><span class="q-toggle-icon" aria-hidden="true">◈</span><span>Binary</span><span class="q-switch-track" aria-hidden="true"></span></button>
+                          <button type="button" class="q-disp-toggle q-alt-toggle" id="qAlt" role="switch" aria-checked="false"><span class="q-toggle-icon" aria-hidden="true">♛</span><span>Pips Only</span><span class="q-switch-track" aria-hidden="true"></span></button>
+                          <button type="button" class="q-disp-toggle" data-q-mode="displacements" role="switch" aria-checked="false"><span class="q-toggle-icon" aria-hidden="true">⇄</span><span>Displacements</span><span class="q-switch-track" aria-hidden="true"></span></button>
+                          <button type="button" class="q-disp-toggle" id="qJoker" role="switch" aria-checked="false"><span class="q-toggle-icon" aria-hidden="true">✦</span><span>Show Joker</span><span class="q-switch-track" aria-hidden="true"></span></button>
+                        </div>
+                      </fieldset>
+                    </div>
+                    </div>
+                    <div class="spread-layout">
+                      <div class="spread-wrap">
+                        <div class="spread-stack">
+                          <div id="annualGrid" class="spread-grid"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            </div>
+          </div>
+
+
+
+          <div class="finder-results">
+            <button type="button" id="fDateReset" class="finder-date-reset" aria-label="Restore selected date" title="Restore selected date" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 7v5h-5M19.2 12a7.2 7.2 0 1 1-2-5"/></svg></button>
+            <div class="finder-result-reciprocals" id="fResultReciprocals" hidden></div>
+            <div class="finder-relationship-reciprocal" id="fRelationshipReciprocal" hidden></div>
+            <div class="finder-result" id="fResult" aria-live="polite"></div>
+            <div class="finder-result finder-result-composite" id="frResult" aria-live="polite"></div>
+            <div class="finder-result" id="fpResult" aria-live="polite"></div>
+            <div class="finder-relationship-reciprocal" id="fpRelationshipReciprocal" hidden></div>
+          </div>
+
+          <div class="finder-about-card-heading nc-selected-card-heading" id="fCardHeadingWrap" hidden>
+            <h3 id="fAboutCardHeading"></h3>
+          </div>
+
+          <!-- Finder reading and personal Cycles. -->
+          <div class="finder-panels" id="fPanels" hidden>
+            <!-- About — the personal card reading. -->
+            <section class="finder-reading-panel finder-about" id="fAbout" tabindex="0">
+                <div class="finder-about-inner">
+                  <div class="finder-about-view finder-about-modern is-active" id="fAboutModern">
+                  <div class="nc-card-summary"><div class="finder-about-card-heading">
+                    <p class="finder-about-card-note" id="fAboutJeffersTitle" hidden></p>
+                  </div>
+                  </div>
+<div class="finder-about-dates ls-stats ls-stats--about" id="fAboutDates" hidden></div>
+                  <div class="finder-about-personality" id="fAboutPersonality"><div class="nc-solar-value" id="fSolarValue" hidden></div></div>
+                  <div class="finder-about-lifescript relationship-connections" id="fRelationshipConnections"></div>
+                  <section class="nc-alternate-result" id="ncAlternateResult" hidden><h3 class="ls-stat-label">Reciprocals</h3><div class="nc-alternate-cards"></div></section>
+                  <div class="finder-about-longform" id="fAboutLongform"></div>
+                  <div class="finder-about-lifescript finder-about-cardology" id="fAboutCardology"></div>
+                  <div class="finder-about-lifescript finder-about-cardology" id="fAboutDisplacements"></div>
+  <section class="finder-intime is-empty" id="fInTime" aria-labelledby="finderCyclesHeading">
+    <h3 class="ls-stat-label" id="finderCyclesHeading">Cycles</h3>
+    <div class="it-inner"></div>
+    <div class="it-empty"><p class="it-empty-note">Select a birthday above to explore personal cycles by age.</p>
+    </div>
+  </section>
+<section class="nc-yenlo-section" aria-labelledby="ncYenloTitle">
+  <h3 class="ls-stat-label" id="ncYenloTitle"><button class="nc-fold-toggle" id="fModernOlney" type="button" aria-expanded="false" aria-controls="fYenloPanel">Yenlo</button></h3>
+  <div class="finder-modern-yenlo" id="fYenloPanel" hidden inert aria-live="polite"><div class="olney-inner olney-panel"></div></div>
+</section>
+                  <div class="about-planet-info" id="fAboutPlanetInfo" hidden aria-live="polite"></div>
+                  </div>
+                </div>
+            </section>
+          </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+</main>
+
+  
+
+
+  
+
+
+
+</body>
+</html>
